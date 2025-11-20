@@ -17,9 +17,9 @@ class AppTextStyles{
   );
   static TextStyle greenBoldTextStyle=TextStyle(
       fontFamily: "SfPro",
-      fontSize: 22.sp,
+      fontSize: 23.sp,
       fontWeight: FontWeight.bold,
-      color: AppColors.white
+      color: AppColors.primaryColor
   );
   static TextStyle semiBoldTextStyle=TextStyle(
       fontFamily: "SfPro",

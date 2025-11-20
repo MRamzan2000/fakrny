@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'on_boarding_screen.dart' show OnBoardingScreen;
+import 'on_boarding_pages/on_boarding_screen.dart' show OnBoardingScreen;
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
   @override

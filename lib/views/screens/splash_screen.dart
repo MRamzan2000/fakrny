@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
               "Your Smart Partner for Timely Medication",
               style: AppTextStyles.semiBoldTextStyle,
             ),
-            verticalSpace(6.h),
+            verticalSpace(9.h),
           ],
         ),
       ),

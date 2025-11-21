@@ -1,5 +1,7 @@
 import 'package:fakrny/utils/app_text_styles.dart';
+import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CustomButton extends StatelessWidget {
@@ -9,6 +11,8 @@ class CustomButton extends StatelessWidget {
   /// Optional / dynamic properties
   final double? height;
   final double? width;
+  final double? horizontal;
+  final String? iconPath;
   final bool? isGradient;
   final Color? color;
   final Gradient? gradient;
@@ -36,6 +40,8 @@ class CustomButton extends StatelessWidget {
     this.border,
     this.boxShadow,
     this.padding,
+    this.horizontal,
+    this.iconPath,
   });
 
   @override
@@ -46,6 +52,7 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: borderRadius ?? BorderRadius.circular(20.sp),
       child: Container(
+        alignment: Alignment.center,
         height: height ?? 6.5.h,
         width: width ?? double.infinity,
         padding: padding ?? EdgeInsets.zero,
@@ -82,12 +89,16 @@ class CustomButton extends StatelessWidget {
       ),
       ],
         ),
-        child: Center(
-          child: Text(
-            title,
-            style:AppTextStyles.buttonTextStyle
+        child: Row(mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            iconPath==null?SizedBox.shrink():  SvgPicture.asset(iconPath!),
+             horizontalSpace(horizontal??0),
+          Text(
+              title,
+              style:AppTextStyles.buttonTextStyle
           ),
-        ),
+        ],)
       ),
     );
   }

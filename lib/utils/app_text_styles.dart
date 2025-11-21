@@ -11,7 +11,7 @@ class AppTextStyles{
   );
   static TextStyle boldTextStyle=TextStyle(
       fontFamily: "SfPro",
-      fontSize: 22.sp,
+      fontSize: 20.sp,
       fontWeight: FontWeight.bold,
       color: AppColors.white
   );
@@ -23,14 +23,14 @@ class AppTextStyles{
   );
   static TextStyle semiBoldTextStyle=TextStyle(
       fontFamily: "SfPro",
-      fontSize: 16.sp,
+      fontSize: 17.sp,
       fontWeight: FontWeight.w600,
       color: AppColors.white
   );
   static TextStyle buttonTextStyle=TextStyle(
       fontFamily: "SfPro",
       fontSize: 16.sp,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       color: AppColors.buttonText
   );
   static TextStyle regularTextStyle=TextStyle(

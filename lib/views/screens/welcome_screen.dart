@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'auth_screens/login_screen.dart';
+import 'auth_screens/signup_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -77,7 +78,9 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   CustomButton(
                     title: "Create new account",
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(()=>SignupScreen());
+                    },
                     height: 5.2.h,
                     borderRadius: BorderRadius.circular(40.px),
                   ),

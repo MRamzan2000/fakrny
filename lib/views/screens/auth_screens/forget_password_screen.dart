@@ -102,7 +102,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                       verticalSpace(.4.h),
 
                       /// Email Field
-                      CustomTextField(
+                      customTextField(
                         hintText: "My Email",
                         controller: controller.forgotEmailCtrl,
                         iconPath: "assets/icons/email.svg",

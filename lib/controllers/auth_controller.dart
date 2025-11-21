@@ -1,3 +1,4 @@
+import 'package:fakrny/models/gender_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class AuthController extends GetxController {
   // New Password Created Controller
   final newPasswordCtrl = TextEditingController();
   final confirmNewPasswordCtrl = TextEditingController();
+  Rx<GenderModel?> selectedGender = Rx<GenderModel?>(null);
 
 
   RxBool remember = false.obs;
@@ -18,7 +20,11 @@ class AuthController extends GetxController {
   void toggleRemember() {
     remember.value = !remember.value;
   }
-
+  List<GenderModel> genderList = [
+    GenderModel(name: "Male"),
+    GenderModel(name: "Female"),
+    GenderModel(name: "Custom"),
+  ];
   void toggleObscure() {
     obscure.value = !obscure.value;
   }

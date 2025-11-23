@@ -2,17 +2,16 @@ import 'package:fakrny/controllers/auth_controller.dart';
 import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
 import 'package:fakrny/views/reused_widgets/elevated_button.dart';
-import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:fakrny/views/reused_widgets/text_filed.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
-import 'package:fakrny/views/screens/auth_screens/forget_password_screen.dart';
 import 'package:fakrny/views/screens/auth_screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:get/get.dart';
+
 class SignupScreen extends StatelessWidget {
-   SignupScreen({super.key});
+  SignupScreen({super.key});
   final AuthController controller = Get.put(AuthController());
 
   @override
@@ -67,10 +66,10 @@ class SignupScreen extends StatelessWidget {
                       ),
                       verticalSpace(.4.h),
 
-                      /// Email Field
+                      /// Name Field
                       CustomTextField(
                         hintText: "My Name",
-                        controller: controller.emailCtrl,
+                        controller: controller.nameCtrl,
                         iconPath: "assets/icons/name.svg",
                       ),
 
@@ -124,11 +123,11 @@ class SignupScreen extends StatelessWidget {
                       ),
                       verticalSpace(.4.h),
 
-                      /// PASSWORD FIELD (Reactive)
+                      /// CONFIRM PASSWORD FIELD (Reactive)
                       Obx(
                             () => CustomTextField(
                           hintText: "Re Enter Your Password",
-                          controller: controller.passCtrl,
+                          controller: controller.confirmPassCtrl,
                           iconPath: "assets/icons/password.svg",
                           isPassword: true,
                           obscureText: controller.obscure.value,
@@ -147,28 +146,28 @@ class SignupScreen extends StatelessWidget {
 
 
                       verticalSpace(2.h),
-                     GestureDetector(
-                       onTap: (){
-                         Get.to((LoginScreen()));
-                       },
-                       child:  Row(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                           Text(
-                             "I already have an account? ",
-                             style: AppTextStyles.smallTextStyle.copyWith(
-                               color: AppColors.borderGrey,
-                             ),
-                           ),
-                           Text(
-                             "Sign In",
-                             style: AppTextStyles.greenBoldTextStyle.copyWith(
-                               fontSize: 16.5.sp,
-                             ),
-                           ),
-                         ],
-                       ),
-                     )
+                      GestureDetector(
+                        onTap: (){
+                          Get.to((LoginScreen()));
+                        },
+                        child:  Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "I already have an account? ",
+                              style: AppTextStyles.smallTextStyle.copyWith(
+                                color: AppColors.borderGrey,
+                              ),
+                            ),
+                            Text(
+                              "Sign In",
+                              style: AppTextStyles.greenBoldTextStyle.copyWith(
+                                fontSize: 16.5.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -180,4 +179,3 @@ class SignupScreen extends StatelessWidget {
     );
   }
 }
-

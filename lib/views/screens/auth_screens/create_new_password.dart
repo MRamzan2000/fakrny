@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:get/get.dart';
+
 class CreateNewPassword extends StatelessWidget {
   CreateNewPassword({super.key});
 
@@ -99,17 +100,19 @@ class CreateNewPassword extends StatelessWidget {
                         ),
                         verticalSpace(.4.h),
 
-                        /// Email Field
-                        CustomTextField(
-                          hintText: "Input Password",
-                          controller: controller.newPasswordCtrl,
-                          iconPath: "assets/icons/password.svg",
-                          isPassword: true,
-                          obscureText: controller.obscure.value,
-                          suffixIcon: controller.obscure.value
-                              ? SvgPicture.asset("assets/icons/eye_off.svg")
-                              : SvgPicture.asset("assets/icons/eye_on.svg"),
-                          onSuffixTap: controller.toggleObscure,
+                        /// PASSWORD FIELD (Reactive)
+                        Obx(
+                              () => CustomTextField(
+                            hintText: "Input Password",
+                            controller: controller.newPasswordCtrl,
+                            iconPath: "assets/icons/password.svg",
+                            isPassword: true,
+                            obscureText: controller.obscure.value,
+                            suffixIcon: controller.obscure.value
+                                ? SvgPicture.asset("assets/icons/eye_off.svg")
+                                : SvgPicture.asset("assets/icons/eye_on.svg"),
+                            onSuffixTap: controller.toggleObscure,
+                          ),
                         ),
                         verticalSpace(1.h),
                         Row(
@@ -120,17 +123,19 @@ class CreateNewPassword extends StatelessWidget {
                         ),
                         verticalSpace(.4.h),
 
-                        /// Email Field
-                        CustomTextField(
-                          hintText: "Re Enter Your Password",
-                          controller: controller.confirmNewPasswordCtrl,
-                          iconPath: "assets/icons/password.svg",
-                          isPassword: true,
-                          obscureText: controller.obscure.value,
-                          suffixIcon: controller.obscure.value
-                              ? SvgPicture.asset("assets/icons/eye_off.svg")
-                              : SvgPicture.asset("assets/icons/eye_on.svg"),
-                          onSuffixTap: controller.toggleObscure,
+                        /// CONFIRM PASSWORD FIELD (Reactive)
+                        Obx(
+                              () => CustomTextField(
+                            hintText: "Re Enter Your Password",
+                            controller: controller.confirmNewPasswordCtrl,
+                            iconPath: "assets/icons/password.svg",
+                            isPassword: true,
+                            obscureText: controller.obscure.value,
+                            suffixIcon: controller.obscure.value
+                                ? SvgPicture.asset("assets/icons/eye_off.svg")
+                                : SvgPicture.asset("assets/icons/eye_on.svg"),
+                            onSuffixTap: controller.toggleObscure,
+                          ),
                         ),
 
                         verticalSpace(6.h),

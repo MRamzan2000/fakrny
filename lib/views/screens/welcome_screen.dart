@@ -91,9 +91,7 @@ class WelcomeScreen extends StatelessWidget {
                     },
                     child: Text(
                       "Already have account?",
-                      style: AppTextStyles.semiBoldTextStyle.copyWith(
-                        color: AppColors.textColor,
-                      ),
+                      style: AppTextStyles.buttonTextStyle
                     ),
                   ),
                 ],

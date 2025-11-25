@@ -1,10 +1,13 @@
 import 'package:fakrny/controllers/auth_controller.dart';
+import 'package:fakrny/models/gender_model.dart';
 import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
 import 'package:fakrny/views/reused_widgets/elevated_button.dart';
+import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:fakrny/views/reused_widgets/text_filed.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:fakrny/views/screens/auth_screens/login_screen.dart';
+import 'package:fakrny/views/screens/auth_screens/verify_email_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -13,6 +16,7 @@ import 'package:get/get.dart';
 class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
   final AuthController controller = Get.put(AuthController());
+  final Rx<DateTime?> dob = Rx<DateTime?>(null);
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +24,14 @@ class SignupScreen extends StatelessWidget {
       backgroundColor: AppColors.primaryColor,
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/images/blur_bg.png"),fit: BoxFit.fitWidth)
+          image: DecorationImage(
+            image: AssetImage("assets/images/blur_bg.png"),
+            fit: BoxFit.fitWidth,
+          ),
         ),
         height: MediaQuery.sizeOf(context).height,
         width: MediaQuery.sizeOf(context).width,
-        child:  Stack(
+        child: Stack(
           children: [
             Align(
               alignment: Alignment.bottomCenter,
@@ -66,13 +73,65 @@ class SignupScreen extends StatelessWidget {
                       ),
                       verticalSpace(.4.h),
 
-                      /// Name Field
-                      CustomTextField(
+                      /// Email Field
+                      customTextField(
                         hintText: "My Name",
-                        controller: controller.nameCtrl,
+                        controller: controller.emailCtrl,
                         iconPath: "assets/icons/name.svg",
                       ),
+                      verticalSpace(1.h),
 
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Date of Birth",
+                                      style: AppTextStyles.smallTextStyle,
+                                    ),
+                                  ],
+                                ),
+                                verticalSpace(.4.h),
+
+                                dobPicker(
+                                  selectedDate: dob,
+                                  hintText: "01-Jan-1990",
+                                  prefixSvgPath: "assets/icons/dob.svg",
+                                ),
+                              ],
+                            ),
+                          ),
+                          horizontalSpace(3.w),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Gender",
+                                      style: AppTextStyles.smallTextStyle,
+                                    ),
+                                  ],
+                                ),
+                                verticalSpace(.4.h),
+
+                                customDropdownField<GenderModel>(
+                                  hint: "Male",
+                                  items: controller.genderList,
+                                  selectedValue: controller.selectedGender,
+                                  label: (gender) => gender.name,
+                                  prefixPath: "assets/icons/gender.svg",
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                       verticalSpace(1.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -83,7 +142,7 @@ class SignupScreen extends StatelessWidget {
                       verticalSpace(.4.h),
 
                       /// Email Field
-                      CustomTextField(
+                      customTextField(
                         hintText: "My Email",
                         controller: controller.emailCtrl,
                         iconPath: "assets/icons/email.svg",
@@ -101,7 +160,7 @@ class SignupScreen extends StatelessWidget {
 
                       /// PASSWORD FIELD (Reactive)
                       Obx(
-                            () => CustomTextField(
+                        () => customTextField(
                           hintText: "My Password",
                           controller: controller.passCtrl,
                           iconPath: "assets/icons/password.svg",
@@ -118,16 +177,19 @@ class SignupScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("Confirm Password", style: AppTextStyles.smallTextStyle),
+                          Text(
+                            "Confirm Password",
+                            style: AppTextStyles.smallTextStyle,
+                          ),
                         ],
                       ),
                       verticalSpace(.4.h),
 
-                      /// CONFIRM PASSWORD FIELD (Reactive)
+                      /// PASSWORD FIELD (Reactive)
                       Obx(
-                            () => CustomTextField(
+                        () => customTextField(
                           hintText: "Re Enter Your Password",
-                          controller: controller.confirmPassCtrl,
+                          controller: controller.passCtrl,
                           iconPath: "assets/icons/password.svg",
                           isPassword: true,
                           obscureText: controller.obscure.value,
@@ -138,19 +200,23 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
 
-
                       verticalSpace(3.h),
 
                       /// LOGIN BUTTON
-                      CustomButton(height: 5.5.h, title: "Sign", onTap: () {}),
-
+                      CustomButton(
+                        height: 5.5.h,
+                        title: "Sign Up",
+                        onTap: () {
+                          Get.to(() => VerifyEmailScreen());
+                        },
+                      ),
 
                       verticalSpace(2.h),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Get.to((LoginScreen()));
                         },
-                        child:  Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
@@ -167,7 +233,7 @@ class SignupScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

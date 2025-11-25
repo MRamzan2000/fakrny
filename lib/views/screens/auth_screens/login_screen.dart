@@ -6,6 +6,8 @@ import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:fakrny/views/reused_widgets/text_filed.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:fakrny/views/screens/auth_screens/forget_password_screen.dart';
+import 'package:fakrny/views/screens/auth_screens/signup_screen.dart';
+import 'package:fakrny/views/screens/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -87,7 +89,7 @@ class LoginScreen extends StatelessWidget {
                       verticalSpace(.4.h),
 
                       /// Email Field
-                      CustomTextField(
+                      customTextField(
                         hintText: "My Email",
                         controller: controller.emailCtrl,
                         iconPath: "assets/icons/email.svg",
@@ -105,7 +107,7 @@ class LoginScreen extends StatelessWidget {
 
                       /// PASSWORD FIELD (Reactive)
                       Obx(
-                        () => CustomTextField(
+                        () => customTextField(
                           hintText: "My Password",
                           controller: controller.passCtrl,
                           iconPath: "assets/icons/password.svg",
@@ -178,7 +180,9 @@ class LoginScreen extends StatelessWidget {
                       verticalSpace(3.h),
 
                       /// LOGIN BUTTON
-                      CustomButton(height: 5.5.h, title: "Login", onTap: () {}),
+                      CustomButton(height: 5.5.h, title: "Login", onTap: () {
+                        Get.to(()=>BottomBar());
+                      }),
 
                       verticalSpace(2.h),
 
@@ -217,22 +221,27 @@ class LoginScreen extends StatelessWidget {
 
                       verticalSpace(2.h),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "I don’t have an account? ",
-                            style: AppTextStyles.smallTextStyle.copyWith(
-                              color: AppColors.borderGrey,
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(()=>SignupScreen());
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "I don’t have an account? ",
+                              style: AppTextStyles.smallTextStyle.copyWith(
+                                color: AppColors.borderGrey,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "Sign Up",
-                            style: AppTextStyles.greenBoldTextStyle.copyWith(
-                              fontSize: 16.5.sp,
+                            Text(
+                              "Sign Up",
+                              style: AppTextStyles.greenBoldTextStyle.copyWith(
+                                fontSize: 16.5.sp,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),

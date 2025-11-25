@@ -2,18 +2,16 @@ import 'package:fakrny/controllers/auth_controller.dart';
 import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
 import 'package:fakrny/views/reused_widgets/elevated_button.dart';
-import 'package:fakrny/views/reused_widgets/text_filed.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
-import 'package:fakrny/views/screens/auth_screens/password_update.dart';
+import 'package:fakrny/views/screens/auth_screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:get/get.dart';
-class CreateNewPassword extends StatelessWidget {
-  CreateNewPassword({super.key});
-
+class VerifyEmailScreen extends StatelessWidget {
+  VerifyEmailScreen({super.key});
   final AuthController controller = Get.put(AuthController());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +26,7 @@ class CreateNewPassword extends StatelessWidget {
           child: Stack(
             children: [
               Positioned(
-                  top: 20.h,
+                  top: 22.h,
                   left: 0,
                   right: 0,
                   child:Column(children: [
@@ -80,64 +78,45 @@ class CreateNewPassword extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-
-                        Text("Set a New Password", style: AppTextStyles.boldTextStyle.copyWith(
+                        verticalSpace(1.h),
+                        Text("Verify your email", style: AppTextStyles.boldTextStyle.copyWith(
                           color: AppColors.black,
 
                         )),
                         verticalSpace(0.4.h),
 
-                        Text("Please set a new password to secure your Work\n Mate account.", style: AppTextStyles.smallTextStyle,
+                        Text("A verification code has been sent to\n example@gmail.com, check your email to\n activate your account.", style: AppTextStyles.smallTextStyle,
                           textAlign: TextAlign.center,),
                         verticalSpace(3.h),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("Password", style: AppTextStyles.smallTextStyle),
-                          ],
-                        ),
-                        verticalSpace(.4.h),
+                        PinCodeTextField(
+                          appContext: context,
+                          length: 6,
+                          obscureText: false,
+                          animationType: AnimationType.scale,
+                          keyboardType: TextInputType.number,
+                          textStyle: AppTextStyles.boldTextStyle.copyWith(fontSize: 20.sp,
+                              color: AppColors.textColor),
+                          cursorColor: AppColors.primaryColor,
 
-                        /// Email Field
-                        customTextField(
-                          hintText: "Input Password",
-                          controller: controller.newPasswordCtrl,
-                          iconPath: "assets/icons/password.svg",
-                          isPassword: true,
-                          obscureText: controller.obscure.value,
-                          suffixIcon: controller.obscure.value
-                              ? SvgPicture.asset("assets/icons/eye_off.svg")
-                              : SvgPicture.asset("assets/icons/eye_on.svg"),
-                          onSuffixTap: controller.toggleObscure,
-                        ),
-                        verticalSpace(1.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("Confirm Password", style: AppTextStyles.smallTextStyle),
-                          ],
-                        ),
-                        verticalSpace(.4.h),
+                          pinTheme: PinTheme(
+                            shape: PinCodeFieldShape.box,
+                            borderRadius: BorderRadius.circular(10),
+                            fieldHeight: 7.h,
+                            fieldWidth: 12.w,
+                            inactiveColor: Colors.grey.shade300,
+                            activeColor: AppColors.primaryColor,
+                            selectedColor: AppColors.primaryColor,
+                          ),
 
-                        /// Email Field
-                        customTextField(
-                          hintText: "Re Enter Your Password",
-                          controller: controller.confirmNewPasswordCtrl,
-                          iconPath: "assets/icons/password.svg",
-                          isPassword: true,
-                          obscureText: controller.obscure.value,
-                          suffixIcon: controller.obscure.value
-                              ? SvgPicture.asset("assets/icons/eye_off.svg")
-                              : SvgPicture.asset("assets/icons/eye_on.svg"),
-                          onSuffixTap: controller.toggleObscure,
+                          onChanged: (value) {},
                         ),
 
                         verticalSpace(6.h),
 
 
                         CustomButton(height: 5.5.h, title: "Submit", onTap: () {
-                          Get.to(()=>PasswordUpdate());
+                          Get.to(()=>LoginScreen());
                         }),
 
                         verticalSpace(2.h),
@@ -150,7 +129,7 @@ class CreateNewPassword extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(bottom: 48.h,
+              Positioned(bottom: 42.h,
                   left: 0,
                   right: 0,
                   child:   SizedBox(

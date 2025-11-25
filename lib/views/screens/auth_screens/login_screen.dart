@@ -127,7 +127,6 @@ class LoginScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Remember Me Toggle
                             Obx(
                               () => Row(
                                 children: [

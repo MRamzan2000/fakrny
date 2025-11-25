@@ -5,6 +5,7 @@ import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:fakrny/views/reused_widgets/reused_able_appbar.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:fakrny/views/screens/medicine/add_medicine_screen_details.dart';
+import 'package:fakrny/views/screens/medicine/scan_medicine_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -70,7 +71,7 @@ RxString isSelected="Manually".obs;
 
                     // Next Button
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: CustomButton(
                         height: 5.5.h,
                         title: "Next",
@@ -78,6 +79,7 @@ RxString isSelected="Manually".obs;
                           if(isSelected.value=="Manually"){
                             Get.to(()=>AddMedicineScreenDetails());
                           }else{
+                            Get.to(()=>ScanMedicine());
 
                           }
                         },

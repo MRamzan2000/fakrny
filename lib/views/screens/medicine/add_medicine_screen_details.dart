@@ -1,7 +1,9 @@
+
 import 'dart:io';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fakrny/controllers/medicine_controller.dart';
+import 'package:fakrny/views/reused_widgets/elevated_button.dart';
 import 'package:fakrny/views/reused_widgets/voice_sound_alertUI.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -147,26 +149,19 @@ class AddMedicineScreenDetails extends StatelessWidget {
                       verticalSpace(1.5.h),
                       VoiceSoundAlertUI(),
                       verticalSpace(4.h),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: _onSave,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            padding: EdgeInsets.symmetric(vertical: 1.6.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                          ),
-                          child: Text(
-                            "Save",
-                            style: AppTextStyles.semiBoldTextStyle.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
+
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: CustomButton(
+                          height: 5.5.h,
+                          title: "Save",
+                          onTap: () {
+
+                          },
                         ),
                       ),
-                      verticalSpace(2.h),
+
+                      verticalSpace(4.h),
                     ],
                   ),
                 ),
@@ -181,14 +176,14 @@ class AddMedicineScreenDetails extends StatelessWidget {
   //Reusable Widgets
   Widget _buildMedicinePictureSection() => GestureDetector(
     onTap: () => _showImagePickerPopup(),
-    child: Container(
+    child:Obx(()=> Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 26.w),
+      padding:controller.selectedImagePath.value !=null?EdgeInsets.zero: EdgeInsets.symmetric(vertical: 4.h, horizontal: 26.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: const Color(0xff999999), width: 1.5),
       ),
-      child: Column(
+      child:controller.selectedImagePath.value !=null?Image.file(File("${controller.selectedImagePath.value}")): Column(
         children: [
           SizedBox(
             height: 12.h,
@@ -205,40 +200,59 @@ class AddMedicineScreenDetails extends StatelessWidget {
           ),
         ],
       ),
-    ),
+    )),
   );
   void _showImagePickerPopup() {
     Get.bottomSheet(
       Container(
         padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 4.w),
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration:  BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xff1FB774),
+              Color(0xff63E4AE),
+            ],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(22),
-            topRight: Radius.circular(22),
+            topLeft: Radius.circular(22.px),
+            topRight: Radius.circular(22.px),
           ),
         ),
         child: Wrap(
           children: [
             ListTile(
-              leading: const Icon(Icons.camera_alt, size: 28),
-              title: const Text("Take Photo"),
+              leading:  Icon(Icons.camera_alt, size: 4.h,color: AppColors.white,),
+              title:  Text("Take Photo",style: AppTextStyles.regularTextStyle.copyWith(
+                color: AppColors.white,
+                fontSize: 17.sp,
+                fontWeight: FontWeight.w500
+              ),),
               onTap: () {
                 controller.pickFromCamera();
                 Get.back();
               },
             ),
             ListTile(
-              leading: const Icon(Icons.photo, size: 28),
-              title: const Text("Choose from Gallery"),
+              leading:  Icon(Icons.photo,size: 4.h,color: AppColors.white,),
+              title:  Text("Choose from Gallery",style: AppTextStyles.regularTextStyle.copyWith(
+              color: AppColors.white,
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w500
+              ),),
               onTap: () {
                 controller.pickFromGallery();
                 Get.back();
               },
             ),
             ListTile(
-              leading: const Icon(Icons.close, size: 28),
-              title: const Text("Cancel"),
+              leading:  Icon(Icons.close, size:  3.4.h,color: AppColors.white,),
+              title:  Text("Cancel",style: AppTextStyles.regularTextStyle.copyWith(
+              color: AppColors.white,
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w500
+              ),),
               onTap: () => Get.back(),
             ),
           ],

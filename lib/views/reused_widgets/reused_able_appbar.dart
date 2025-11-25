@@ -11,7 +11,7 @@ Widget appBar({
     padding:EdgeInsets.only(right: 3.w),
     child: Container(
       padding: EdgeInsets.symmetric(horizontal: 4.w),
-      height: 8.h,
+      height: 6.h,
       width: double.infinity,
       color: AppColors.appBarColor,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,

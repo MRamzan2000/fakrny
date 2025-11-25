@@ -1,9 +1,14 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
+import 'package:fakrny/views/reused_widgets/custom_switch.dart';
+import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
+import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import 'custom_radio_button.dart';
 
 class VoiceSoundAlertUI extends StatefulWidget {
   const VoiceSoundAlertUI({super.key});
@@ -15,6 +20,7 @@ class VoiceSoundAlertUI extends StatefulWidget {
 class _VoiceSoundAlertUIState extends State<VoiceSoundAlertUI> {
   RxBool voiceAlert = true.obs;
   RxString alertType = "voice".obs;
+  RxBool isOn = true.obs;
 
   TextEditingController customController = TextEditingController();
 
@@ -41,56 +47,28 @@ class _VoiceSoundAlertUIState extends State<VoiceSoundAlertUI> {
               ),
               const Spacer(),
 
-              GestureDetector(
-                onTap: () => voiceAlert.value = !voiceAlert.value,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  height: 30,
-                  width: 55,
-                  decoration: BoxDecoration(
-                    color: voiceAlert.value
-                        ? const Color(0xff63E4AE)
-                        : const Color(0xffD1D1D1),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  child: AnimatedAlign(
-                    duration: const Duration(milliseconds: 200),
-                    alignment: voiceAlert.value
-                        ? Alignment.centerRight
-                        : Alignment.centerLeft,
-                    child: Container(
-                      width: 24,
-                      height: 24,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              SwitchButton(
+                value: isOn.value,
+                onChanged: (v) {
+                  isOn.value = v;
+                },
+              )
             ],
           ),
 
-          /// MAIN CONTENT
           if (voiceAlert.value) ...[
-            /// RADIO — Voice Alert (LEFT 0 SPACING)
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Obx(
-                      () => Radio(
-                    value: "voice",
-                    groupValue: alertType.value,
-                    activeColor: const Color(0xff63E4AE),
-                    onChanged: (v) => alertType.value = v!,
-                  ),
+                CustomRadio(
+                  isSelected: alertType.value == "voice",
+                  onTap: () => alertType.value = "voice",
                 ),
-                const Text("Voice Alert", style: TextStyle(fontSize: 14)),
+                horizontalSpace(2.w),
+                Text("Voice Alert", style: TextStyle(fontSize: 15.sp)),
               ],
             ),
+            verticalSpace(1.h),
 
-            /// DROPDOWN
             Obx(() {
               if (alertType.value == "voice") {
                 return _buildDropdown(
@@ -102,28 +80,21 @@ class _VoiceSoundAlertUIState extends State<VoiceSoundAlertUI> {
               return const SizedBox();
             }),
 
-            const SizedBox(height: 12),
+            verticalSpace(1.4.h),
 
             /// RADIO — Custom
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Obx(
-                      () => Radio(
-                    value: "custom",
-                    groupValue: alertType.value,
-                    activeColor: const Color(0xff63E4AE),
-                    onChanged: (v) => alertType.value = v!,
-                  ),
+                CustomRadio(
+                  isSelected: alertType.value == "custom",
+                  onTap: () => alertType.value = "custom",
                 ),
-                const Text(
-                  "Custom Text-to-Speech Alert",
-                  style: TextStyle(fontSize: 14),
-                ),
+                horizontalSpace( 2.w),
+                Text("Custom Text-to-Speech Alert", style: TextStyle(fontSize: 15.sp)),
               ],
             ),
+            verticalSpace(1.h),
 
-            /// TEXT FIELD
             Obx(() {
               if (alertType.value == "custom") {
                 return _buildTextField(
@@ -201,18 +172,29 @@ class _VoiceSoundAlertUIState extends State<VoiceSoundAlertUI> {
       String hint,
       String label,
       ) {
-    return Container(
-      margin: const EdgeInsets.only(left: 40, right: 6),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          hintText: hint,
-          contentPadding:
-          const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+    return  Container(
+      padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: 1.h),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(14.sp),
+        border: Border.all(color: AppColors.borderGrey,),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child:
+            TextField(
+              style: AppTextStyles.hintTextStyle,
+              decoration: InputDecoration(
+                isCollapsed: true,
+                border: InputBorder.none,
+                hintText: "Type here",
+                hintStyle: TextStyle(fontSize: 16.sp, color: Colors.grey),
+              ),
+            ),
           ),
-        ),
+
+        ],
       ),
     );
   }

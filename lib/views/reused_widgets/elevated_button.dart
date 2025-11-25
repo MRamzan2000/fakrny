@@ -12,6 +12,7 @@ class CustomButton extends StatelessWidget {
   final double? height;
   final double? width;
   final double? horizontal;
+  final TextStyle? style;
   final String? iconPath;
   final bool? isGradient;
   final Color? color;
@@ -41,7 +42,7 @@ class CustomButton extends StatelessWidget {
     this.boxShadow,
     this.padding,
     this.horizontal,
-    this.iconPath,
+    this.iconPath,  this.style,
   });
 
   @override
@@ -96,7 +97,7 @@ class CustomButton extends StatelessWidget {
              horizontalSpace(horizontal??0),
           Text(
               title,
-              style:AppTextStyles.buttonTextStyle
+              style:style??  AppTextStyles.buttonTextStyle
           ),
         ],)
       ),

@@ -15,14 +15,11 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class OnBoardingScreen extends StatelessWidget {
   OnBoardingScreen({super.key});
 
-  final OnBoardingController onboardingController =
-  Get.put(OnBoardingController());
+  final OnBoardingController onboardingController = Get.put(
+    OnBoardingController(),
+  );
 
-  final pages = const [
-    OnBoardingPage1(),
-    OnBoardingPage2(),
-    OnBoardingPage3(),
-  ];
+  final pages = const [OnBoardingPage1(), OnBoardingPage2(), OnBoardingPage3()];
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +28,16 @@ class OnBoardingScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            /// PAGEVIEW
             SizedBox(
-              height: 72.h, // fully responsive
+              height: 72.h,
               width: 100.w,
               child: PageView(
                 controller: onboardingController.pageController,
                 onPageChanged: (i) =>
-                onboardingController.currentPage.value = i,
+                    onboardingController.currentPage.value = i,
                 children: pages,
               ),
             ),
-
-            /// INDICATOR
             Padding(
               padding: EdgeInsets.only(top: 1.5.h),
               child: SmoothPageIndicator(
@@ -52,8 +46,8 @@ class OnBoardingScreen extends StatelessWidget {
                 effect: ExpandingDotsEffect(
                   dotColor: AppColors.grey,
                   activeDotColor: AppColors.primaryColor,
-                  dotHeight: 1.6.h, // responsive
-                  dotWidth: 1.6.h, // responsive
+                  dotHeight: 1.6.h,
+                  dotWidth: 1.6.h,
                   expansionFactor: 3,
                   spacing: 1.w,
                 ),
@@ -61,28 +55,28 @@ class OnBoardingScreen extends StatelessWidget {
             ),
 
             const Spacer(),
-
-            /// BOTTOM BAR
             Padding(
               padding: EdgeInsets.only(left: 6.w),
               child: Obx(
-                    () => Row(
+                () => Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    /// SKIP TEXT (responsive font)
-                    Text(
-                      "Skip",
-                      style: AppTextStyles.smallTextStyle.copyWith(
-                        fontSize: 18.sp, // fully responsive
-                        fontWeight: FontWeight.w100,
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => WelcomeScreen());
+                      },
+                      child: Text(
+                        "Skip",
+                        style: AppTextStyles.smallTextStyle.copyWith(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w100,
+                        ),
                       ),
                     ),
-
-                    /// NEXT / GET STARTED BUTTON
                     InkWell(
                       onTap: () {
                         if (onboardingController.currentPage.value == 2) {
-                       Get.to(()=>WelcomeScreen());
+                          Get.to(() => WelcomeScreen());
                         } else {
                           onboardingController.nextPage();
                         }

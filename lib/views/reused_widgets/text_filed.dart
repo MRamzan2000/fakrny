@@ -18,6 +18,7 @@ class CustomInputField extends StatelessWidget {
   // TextField specific
   final TextEditingController? controller;
   final bool isPassword;
+  final int? maxLine;
   final bool obscureText;
   final VoidCallback? onSuffixTap;
   final Widget? suffixIcon;
@@ -38,6 +39,7 @@ class CustomInputField extends StatelessWidget {
     this.suffixIcon,
     this.trailingIcon,
     this.onTap,
+    this.maxLine,
   });
 
   // Shared decoration
@@ -69,6 +71,7 @@ class CustomInputField extends StatelessWidget {
                   TextField(
                     controller: controller,
                     obscureText: obscureText,
+                    maxLines:maxLine??1 ,
                     style: AppTextStyles.hintTextStyle,
                     decoration: InputDecoration(
                       isCollapsed: true,
@@ -99,6 +102,7 @@ class CustomInputField extends StatelessWidget {
 // custom_text_field.dart
 Widget customTextField({
   required String hintText,
+   int? maxLine,
   required TextEditingController controller,
   required String iconPath,
   bool isPassword = false,
@@ -115,12 +119,14 @@ Widget customTextField({
     obscureText: obscureText,
     onSuffixTap: onSuffixTap,
     suffixIcon: suffixIcon,
+    maxLine: maxLine,
   );
 }
 
 
 Widget customDropdownField<T>({
   required String hint,
+   int? maxLine,
   required Rx<T?> selectedValue,
   required List<T> items,
   required String Function(T) label,
@@ -128,6 +134,7 @@ Widget customDropdownField<T>({
 }) {
   return CustomInputField(
     hintText: hint,
+    maxLine:maxLine,
     prefixIconPath: prefixPath,
     trailingIcon: SvgPicture.asset(
       "assets/icons/down_arrow.svg",

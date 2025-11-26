@@ -44,9 +44,6 @@ class AddMedicineController extends GetxController {
     "Don't forget your pill now."
   ];
 
-  /// ---------------------------------------------------
-  /// 🔥 IMAGE PICKER (Gallery + Camera)
-  /// ---------------------------------------------------
   final RxnString selectedImagePath = RxnString();
 
   final ImagePicker _picker = ImagePicker();

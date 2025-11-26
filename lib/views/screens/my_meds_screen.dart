@@ -112,11 +112,11 @@ class MyMedsScreen extends StatelessWidget {
 
              dividerColor: Colors.transparent,
              indicator: BoxDecoration(
-               color: AppColors.primaryColor,  // Active Tab Color
+               color: AppColors.primaryColor,
                borderRadius: BorderRadius.circular(25),
              ),
-             labelColor: AppColors.white,  // Active Tab Text Color
-             unselectedLabelColor: AppColors.grey,  // Inactive Tab Text Color
+             labelColor: AppColors.white,
+             unselectedLabelColor: AppColors.grey,
            ),
          ),
 

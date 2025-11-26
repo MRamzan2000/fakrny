@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fakrny/controllers/medicine_controller.dart';
 import 'package:fakrny/views/reused_widgets/voice_sound_alertUI.dart';

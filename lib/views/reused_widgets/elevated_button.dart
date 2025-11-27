@@ -74,9 +74,7 @@ class CustomButton extends StatelessWidget {
               )
               : null,
           borderRadius: borderRadius ?? BorderRadius.circular(20.sp),
-          border: useGradient
-              ? null
-              : border ??
+          border: border ??
               Border.all(
                 color: const Color(0xff1FB774),
                 width: 2,

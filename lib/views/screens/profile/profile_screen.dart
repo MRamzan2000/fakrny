@@ -1,86 +1,137 @@
+import 'package:fakrny/utils/app_colors.dart';
+import 'package:fakrny/utils/app_text_styles.dart';
+import 'package:fakrny/utils/popups.dart';
+import 'package:fakrny/views/reused_widgets/elevated_button.dart';
+import 'package:fakrny/views/reused_widgets/reused_able_appbar.dart';
+import 'package:fakrny/views/reused_widgets/vertical_space.dart';
+import 'package:fakrny/views/screens/privacy_policy_screen.dart';
 import 'package:fakrny/views/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FFFE),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFE8FFFB),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Get.back(),
-        ),
-        title: const Text("Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600)),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
+      body: SafeArea(
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.all(4.w),
-              decoration: BoxDecoration(
-                color: const Color(0xFFE8FFFB),
-                borderRadius: BorderRadius.circular(20),
-              ),
+            appBar(title: "Profile"),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
               child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(
-                      "https://randomuser.me/api/portraits/men/46.jpg", // Replace with actual image if needed
-                    ),
-                  ),
-                  SizedBox(height: 2.h),
-                  const Text(
-                    "Mohsin",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 1.5.h),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 1.h),
+                    padding: EdgeInsets.symmetric(vertical: 3.h),
+                    width: double.infinity,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF00D9B8),
-                      borderRadius: BorderRadius.circular(30),
+                      color: AppColors.appBarColor,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
-                      "Edit",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 5.h,
+                          backgroundImage: NetworkImage(
+                            "https://randomuser.me/api/portraits/men/46.jpg", // Replace with actual image if needed
+                          ),
+                        ),
+                        verticalSpace(.6.h),
+                        Text(
+                          "Mohsin",
+                          style: AppTextStyles.semiBoldTextStyle.copyWith(
+                            color: AppColors.textColor,
+                          ),
+                        ),
+                        verticalSpace(1.h),
+                        CustomButton(
+                          height: 3.5.h,
+                          width: 24.w,
+                          title: "Edit",
+                          onTap: () {
+                            showEditProfileDialog(context);
+                          },
+                        ),
+                      ],
                     ),
+                  ),
+
+                  verticalSpace(2.h),
+
+                  _buildMenuItem(
+                    icon: Icons.settings_outlined,
+                    title: "Settings",
+                    onTap: () => Get.to(() => const SettingsScreen()),
+                  ),
+                  verticalSpace(1.5.h),
+                  _buildMenuItem(
+                    icon: Icons.privacy_tip_outlined,
+                    title: "Privacy Policy",
+                    onTap: () {
+                      Get.to(()=>PrivacyPolicyScreen());
+                    },
+                  ),
+                  verticalSpace(1.5.h),
+
+                  _buildMenuItem(
+                    icon: Icons.star_border,
+                    title: "Rate Us",
+                    onTap: () {},
+                  ),
+                  verticalSpace(1.5.h),
+
+                  _buildMenuItem(
+                    icon: Icons.share_outlined,
+                    title: "Share",
+                    onTap: () {},
+                  ),
+                  verticalSpace(1.5.h),
+
+                  _buildMenuItem(
+                    icon: Icons.logout,
+                    title: "Log out",
+                    onTap: () {
+                      showLogoutDialog(context);
+                    },
+                    color: Colors.red,
                   ),
                 ],
               ),
             ),
-
-            SizedBox(height: 4.h),
-
-            _buildMenuItem(icon: Icons.settings_outlined, title: "Settings", onTap: () => Get.to(() => const SettingsScreen())),
-            _buildMenuItem(icon: Icons.privacy_tip_outlined, title: "Privacy Policy", onTap: () {}),
-            _buildMenuItem(icon: Icons.star_border, title: "Rate Us", onTap: () {}),
-            _buildMenuItem(icon: Icons.share_outlined, title: "Share", onTap: () {}),
-            _buildMenuItem(icon: Icons.logout, title: "Log out", onTap: () {}, color: Colors.red),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMenuItem({required IconData icon, required String title, required VoidCallback onTap, Color? color}) {
+  Widget _buildMenuItem({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+    Color? color,
+  }) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 4.w),
-      leading: Icon(icon, color: color ?? const Color(0xFF00D9B8), size: 26),
-      title: Text(title, style: TextStyle(fontSize: 17.sp, color: color ?? Colors.black87)),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black54),
+      leading: Icon(icon, color: color ?? AppColors.primaryColor, size: 3.4.h),
+      title: Text(
+        title,
+        style: AppTextStyles.semiBoldTextStyle.copyWith(
+          color: AppColors.textColor,
+          fontSize: 15.5.sp,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 16,
+        color: Colors.black54,
+      ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      tileColor: const Color(0xFFE8FFFB),
+      tileColor: AppColors.appBarColor,
       onTap: onTap,
-      minVerticalPadding: 20,
     );
   }
 }

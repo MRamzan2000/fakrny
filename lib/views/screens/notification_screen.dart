@@ -4,8 +4,8 @@ import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class NotificationTypeScreen extends StatelessWidget {
-  const NotificationTypeScreen({super.key});
+class NotificationScreen extends StatelessWidget {
+  const NotificationScreen({super.key});
 
   final List<Map<String, String>> notifications = const [
     {

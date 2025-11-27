@@ -5,13 +5,14 @@ import 'package:fakrny/utils/second_curved.dart';
 import 'package:fakrny/views/reused_widgets/elevated_button.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:fakrny/views/screens/notification_screen.dart';
+import 'package:fakrny/views/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'screens/medicine/add_medicine_screen.dart';
+import 'medicine/add_medicine_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -81,11 +82,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: ListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: Text(
-                                  "Hey Mohsin!",
-                                  style: AppTextStyles.boldTextStyle.copyWith(
-                                    color: AppColors.textColor,
-                                    fontSize: 20.sp,
+                                title: GestureDetector(
+                                  onTap: (){
+                                    Get.to(()=>ProfileScreen());
+                                  },
+                                  child: Text(
+                                    "Hey Mohsin!",
+                                    style: AppTextStyles.boldTextStyle.copyWith(
+                                      color: AppColors.textColor,
+                                      fontSize: 20.sp,
+                                    ),
                                   ),
                                 ),
                                 subtitle: Text(
@@ -100,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   scale: 1.2,
                                   child: GestureDetector(
                                     onTap: (){
-                                      Get.to(()=>NotificationTypeScreen());
+                                      Get.to(()=>NotificationScreen());
                                     },
                                     child: SizedBox(
                                       width: 16.w,

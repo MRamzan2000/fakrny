@@ -5,7 +5,6 @@ import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:fakrny/views/reused_widgets/elevated_button.dart';
 
 import 'medicine/medicine_detail_screen.dart';
 
@@ -133,7 +132,7 @@ class MyMedsScreen extends StatelessWidget {
                     final item = medicines[index];
                     return GestureDetector(
                       onTap: (){
-                        Get.to(() => const MedicineDetailScreen());
+                        Get.to(() =>  MedicineDetailScreen(title:  item["name"], image:  item["image"],));
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.3.h),
@@ -201,106 +200,4 @@ class MyMedsScreen extends StatelessWidget {
   }
 
 
-  void showStopMedicineDialog(BuildContext context) {
-    final TextEditingController reasonController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.sp),
-          ),
-          child: Container(
-            padding: EdgeInsets.all(5.w),
-            constraints: BoxConstraints(
-              maxWidth: 90.w,
-              maxHeight: 60.h,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalSpace(2.h),
-                Text(
-                  "Stop Medicine",
-                  style: AppTextStyles.semiBoldTextStyle.copyWith(
-                    fontSize: 20.sp,
-                    color: AppColors.primaryColor, // Assuming dark blue-ish for title
-                  ),
-                ),
-                verticalSpace(3.h),
-                Text(
-                  "Are you sure you want to Stop this medicine?",
-                  style: AppTextStyles.regularTextStyle.copyWith(
-                    fontSize: 16.sp,
-                    color: AppColors.textColor,
-                  ),
-                ),
-                verticalSpace(1.h),
-                Text(
-                  "if yes write the reason for stopping",
-                  style: AppTextStyles.regularTextStyle.copyWith(
-                    fontSize: 16.sp,
-                    color: AppColors.textColor,
-                  ),
-                ),
-                verticalSpace(3.h),
-                TextFormField(
-                  controller: reasonController,
-                  decoration: InputDecoration(
-                    hintText: "Type here",
-                    hintStyle: AppTextStyles.smallTextStyle.copyWith(
-                      fontSize: 14.sp,
-                      color: Colors.grey,
-                    ),
-                    filled: true,
-                    fillColor: Colors.green.shade50, // Light green background
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.sp),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 4.w,
-                      vertical: 2.h,
-                    ),
-                  ),
-                  maxLines: 3,
-                ),
-                verticalSpace(4.h),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CustomButton(
-                        height: 5.h,
-                        title: "Continue",
-                        onTap: () {
-                          // Handle continue logic
-                          Navigator.of(context).pop(reasonController.text);
-                        },
-                        textColor: Colors.white,
-                      ),
-                    ),
-                    horizontalSpace(3.w),
-                    Expanded(
-                      child: CustomButton(
-                        height: 5.h,
-                        title: "End",
-                        onTap: () {
-                          // Handle end logic
-                          Navigator.of(context).pop();
-                        },
-                        textColor: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                verticalSpace(2.h),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 }

@@ -90,10 +90,13 @@ class CustomButton extends StatelessWidget {
       ),
       ],
         ),
-        child: Row(mainAxisAlignment: MainAxisAlignment.center,
+        child:iconPath==null?Text(
+            title,
+            style:style??  AppTextStyles.buttonTextStyle
+        ): Row(mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            iconPath==null?SizedBox.shrink():  SvgPicture.asset(iconPath!),
+            SvgPicture.asset(iconPath!),
              horizontalSpace(horizontal??0),
           Text(
               title,

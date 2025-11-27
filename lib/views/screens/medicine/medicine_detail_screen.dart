@@ -1,57 +1,68 @@
 import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
+import 'package:fakrny/utils/popups.dart';
+import 'package:fakrny/views/reused_widgets/elevated_button.dart';
 import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:fakrny/views/reused_widgets/reused_able_appbar.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
+import 'package:fakrny/views/screens/medicine/add_medicine_screen_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MedicineDetailScreen extends StatelessWidget {
-  const MedicineDetailScreen({super.key});
+  final String title;
+  final String image;
+  const MedicineDetailScreen({super.key, required this.title, required this.image});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FFFB),
       body: SafeArea(
         child: Column(
           children: [
             // AppBar
-            appBar(
-              title: "Risek",
-              // actions: [
-              //   Padding(
-              //     padding: EdgeInsets.only(right: 4.w),
-              //     child: Text(
-              //       "Edit",
-              //       style: AppTextStyles.regularTextStyle.copyWith(
-              //         color: AppColors.primaryColor,
-              //         fontSize: 17.sp,
-              //       ),
-              //     ),
-              //   ),
-              // ],
-            ),
+        Container(
+          color: AppColors.appBarColor,
+          child: Row(
+            children: [
+              Expanded(child: appBar(title: title)),
+              Padding(
+                padding: EdgeInsets.only(right: 4.w),
+                child:InkWell(
+                  onTap: (){
+                    Get.to(()=>AddMedicineScreenDetails());
+                  },
+                  child:  Text(
+                    "Edit",
+                    style: AppTextStyles.regularTextStyle.copyWith(
+                      color: AppColors.primaryColor,
+                      fontSize: 17.sp,
+                    ),
+                  ),
+                )
+              ),
+            ],
+          ),
+        ),
 
-            verticalSpace(2.h),
 
             Expanded(
               child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 5.w),
+                padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Medicine Image
                     Center(
                       child: Image.asset(
-                        "assets/images/risek.png",
+                      image,
                         height: 35.h,
                         fit: BoxFit.contain,
                       ),
                     ),
 
-                    verticalSpace(1.5.h),
 
                     // Medicine Name
                     _buildInfoRow(
@@ -59,8 +70,9 @@ class MedicineDetailScreen extends StatelessWidget {
                       label: "Medicine Name",
                       value: "Risek",
                     ),
-
-                    verticalSpace(2.h),
+                    verticalSpace(1.h),
+                    Divider(),
+                    verticalSpace(.5.h),
 
                     // Dosage
                     _buildInfoRow(
@@ -68,8 +80,9 @@ class MedicineDetailScreen extends StatelessWidget {
                       label: "Medicine Dosage(mg, ml, mcg, IU, etc.)",
                       value: "20",
                     ),
-
-                    verticalSpace(2.h),
+                    verticalSpace(1.h),
+                    Divider(),
+                    verticalSpace(.5.h),
 
                     // Dose & Stock Row
                     Row(
@@ -91,8 +104,9 @@ class MedicineDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-
-                    verticalSpace(3.h),
+                    verticalSpace(1.h),
+                    Divider(),
+                    verticalSpace(.5.h),
 
                     // Dosage Frequency & Time Section
                     Text(
@@ -103,7 +117,7 @@ class MedicineDetailScreen extends StatelessWidget {
                       ),
                     ),
 
-                    verticalSpace(1.5.h),
+                    verticalSpace(1.h),
 
                     // Start & End Date
                     Row(
@@ -124,20 +138,28 @@ class MedicineDetailScreen extends StatelessWidget {
                       ],
                     ),
 
-                    verticalSpace(2.h),
+                    verticalSpace(1.h),
+                    Divider(),
+                    verticalSpace(.5.h),
 
                     // Frequency
                     Text(
                       "Dosage Frequency",
-                      style: AppTextStyles.smallTextStyle,
+                      style:AppTextStyles.semiBoldTextStyle.copyWith(
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textColor,
+                      ),
                     ),
                     verticalSpace(0.8.h),
                     Text(
                       "3 times per day",
-                      style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp),
+                      style: AppTextStyles.regularTextStyle.copyWith(
+                        fontSize: 16.sp,
+                      ),
                     ),
 
-                    verticalSpace(1.5.h),
+                    verticalSpace(1.h),
 
                     // Dose Times
                     Row(
@@ -149,7 +171,9 @@ class MedicineDetailScreen extends StatelessWidget {
                       ],
                     ),
 
-                    verticalSpace(3.h),
+                    verticalSpace(1.h),
+                    Divider(),
+                    verticalSpace(.5.h),
 
                     // Medicine Instructions
                     Text(
@@ -160,17 +184,26 @@ class MedicineDetailScreen extends StatelessWidget {
                       ),
                     ),
 
-                    verticalSpace(1.5.h),
+                    verticalSpace(1.h),
 
                     // How it should be taken
-                    _buildInstructionRow("How it should be taken", "Empty Stomach"),
+                    _buildInstructionRow(
+                      "How it should be taken",
+                      "Empty Stomach",
+                    ),
 
-                    verticalSpace(2.h),
-
+                    verticalSpace(1.h),
+                    Divider(),
+                    verticalSpace(.5.h),
                     // Special instructions
-                    _buildInstructionRow("Special instructions", "Take with milk"),
+                    _buildInstructionRow(
+                      "Special instructions",
+                      "Take with milk",
+                    ),
 
-                    verticalSpace(4.h),
+                    verticalSpace(1.h),
+                    Divider(),
+                    verticalSpace(.5.h),
 
                     // Voice & Sound Alert
                     Text(
@@ -180,57 +213,37 @@ class MedicineDetailScreen extends StatelessWidget {
                         color: AppColors.textColor,
                       ),
                     ),
-
-                    verticalSpace(1.5.h),
-
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(4.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(14.sp),
-                        border: Border.all(color: AppColors.borderGrey),
+                    verticalSpace(1.h),
+                    Text(
+                      "Voice Alert",
+                      style: AppTextStyles.smallTextStyle,
+                    ),
+                    verticalSpace(.3.h),
+                    Text(
+                      "It's time to take your white pill after your meal.",
+                      style: AppTextStyles.regularTextStyle.copyWith(
+                        fontSize: 16.sp,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Voice Alert",
-                            style: AppTextStyles.smallTextStyle,
-                          ),
-                          verticalSpace(1.h),
-                          Text(
-                            "It's time to take your white pill after your meal.",
-                            style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp),
-                          ),
-                          verticalSpace(2.h),
-                          Center(
-                            child: Container(
-                              width: 50.w,
-                              padding: EdgeInsets.symmetric(vertical: 1.2.h),
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [Color(0xff1FB774), Color(0xff63E4AE)],
-                                ),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Stop",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                    ),
+                    verticalSpace(1.h),
+                    Divider(),
+                    verticalSpace(.5.h),
+
+
+                    // Next Button
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: CustomButton(
+                        height: 5.5.h,
+                        title: "Stop",
+                        onTap: () {
+                          showStopMedicineDialog(context);
+                        },
                       ),
                     ),
 
-                    verticalSpace(8.h),
+                    // Bottom padding
+                    verticalSpace(7.h),
                   ],
                 ),
               ),
@@ -243,39 +256,57 @@ class MedicineDetailScreen extends StatelessWidget {
 
   // Reusable Widgets
 
-  Widget _buildInfoRow({required String icon, required String label, required String value}) {
-    return Row(
+  Widget _buildInfoRow({
+    required String icon,
+    required String label,
+    required String value,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SvgPicture.asset(icon, height: 3.5.h),
-        horizontalSpace(3.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(label, style: AppTextStyles.smallTextStyle),
-              verticalSpace(0.5.h),
-              Text(value, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 17.sp)),
-            ],
-          ),
+        Text(label, style: AppTextStyles.smallTextStyle.copyWith(fontSize: 16.5.sp,fontWeight: FontWeight.w400)),
+        verticalSpace(.6.h),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset(icon, height: 3.3.h),
+            horizontalSpace(2.w),
+            Text(
+              value,
+              style: AppTextStyles.regularTextStyle.copyWith(fontSize: 17.sp),
+            ),
+          ],
         ),
+
+
       ],
     );
   }
 
-  Widget _buildSmallInfo({required String icon, required String label, required String value}) {
-    return Row(
+  Widget _buildSmallInfo({
+    required String icon,
+    required String label,
+    required String value,
+  }) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SvgPicture.asset(icon, height: 3.h),
-        horizontalSpace(2.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(label, style: AppTextStyles.smallTextStyle.copyWith(fontSize: 15.sp)),
-              verticalSpace(0.5.h),
-              Text(value, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp)),
-            ],
-          ),
+        Text(
+          label,
+          style: AppTextStyles.smallTextStyle.copyWith(fontSize: 16.5.sp,fontWeight: FontWeight.w400)
+        ),
+        verticalSpace(.6.h),
+
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SvgPicture.asset(icon, height: 3.h),
+            horizontalSpace(2.w),
+            Text(
+              value,
+              style: AppTextStyles.regularTextStyle.copyWith(fontSize: 15.5.sp),
+            ),
+          ],
         ),
       ],
     );
@@ -285,21 +316,18 @@ class MedicineDetailScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: AppTextStyles.smallTextStyle),
+        Text(label, style:AppTextStyles.smallTextStyle.copyWith(fontSize: 16.5.sp,fontWeight: FontWeight.w400)),
         verticalSpace(0.8.h),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
-          decoration: BoxDecoration(
-            border: Border.all(color: const Color(0xff999999)),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(date, style: AppTextStyles.hintTextStyle.copyWith(fontSize: 16.sp)),
-              SvgPicture.asset("assets/icons/date_medi.svg", height: 3.h),
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              date,
+              style: AppTextStyles.regularTextStyle.copyWith(fontSize: 15.5.sp),
+            ),
+            horizontalSpace(3.w),
+            SvgPicture.asset("assets/icons/date_medi.svg", height: 3.h),
+          ],
         ),
       ],
     );
@@ -310,13 +338,9 @@ class MedicineDetailScreen extends StatelessWidget {
       children: [
         Text(label, style: AppTextStyles.smallTextStyle),
         verticalSpace(0.8.h),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 5.w),
-          decoration: BoxDecoration(
-            border: Border.all(color: const Color(0xff999999)),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Text(time, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp)),
+        Text(
+          time,
+          style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp),
         ),
       ],
     );
@@ -328,7 +352,10 @@ class MedicineDetailScreen extends StatelessWidget {
       children: [
         Text(title, style: AppTextStyles.smallTextStyle),
         verticalSpace(0.8.h),
-        Text(value, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp)),
+        Text(
+          value,
+          style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp),
+        ),
       ],
     );
   }

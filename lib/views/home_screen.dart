@@ -4,6 +4,7 @@ import 'package:fakrny/utils/app_text_styles.dart';
 import 'package:fakrny/utils/second_curved.dart';
 import 'package:fakrny/views/reused_widgets/elevated_button.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
+import 'package:fakrny/views/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -97,12 +98,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 trailing: Transform.scale(
                                   scale: 1.2,
-                                  child: SizedBox(
-                                    width: 16.w,
-                                    child: SvgPicture.asset(
-                                      "assets/icons/notification_icon.svg",
+                                  child: GestureDetector(
+                                    onTap: (){
+                                      Get.to(()=>NotificationTypeScreen());
+                                    },
+                                    child: SizedBox(
+                                      width: 16.w,
+                                      child: SvgPicture.asset(
+                                        "assets/icons/notification_icon.svg",
+                                      ),
                                     ),
-                                  ),
+                                  )
                                 ),
                               ),
                             ),

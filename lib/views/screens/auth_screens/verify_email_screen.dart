@@ -85,7 +85,7 @@ class VerifyEmailScreen extends StatelessWidget {
                         )),
                         verticalSpace(0.4.h),
 
-                        Text("A verification code has been sent to\n example@gmail.com, check your email to\n activate your account.", style: AppTextStyles.smallTextStyle,
+                        Text("A verification code has been sent to\n android@gmail.com, check your email to\n activate your account.", style: AppTextStyles.smallTextStyle,
                           textAlign: TextAlign.center,),
                         verticalSpace(3.h),
 

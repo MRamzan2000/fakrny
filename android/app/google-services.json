@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "206987515302",
-    "project_id": "fakrny-app-57294",
-    "storage_bucket": "fakrny-app-57294.firebasestorage.app"
+    "project_number": "1009934192640",
+    "project_id": "fakrny-8537b",
+    "storage_bucket": "fakrny-8537b.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:206987515302:android:1c3164c1a80064e5ef2b67",
+        "mobilesdk_app_id": "1:1009934192640:android:af7430ccb69847109548e5",
         "android_client_info": {
           "package_name": "com.fakrny.android"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAhempqegwQedLVwhScQeQdIwM_OHLx-ME"
+          "current_key": "AIzaSyD95x9NDrduxVVPex_vPBJo4i6yGYvz2_8"
         }
       ],
       "services": {

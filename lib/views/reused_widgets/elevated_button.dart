@@ -1,3 +1,4 @@
+import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
 import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:flutter/material.dart';
@@ -76,8 +77,8 @@ class CustomButton extends StatelessWidget {
           borderRadius: borderRadius ?? BorderRadius.circular(20.sp),
           border: border ??
               Border.all(
-                color: const Color(0xff1FB774),
-                width: 2,
+                color: AppColors.primaryColor,
+                width: 1,
               ),
           boxShadow: boxShadow??  [
         BoxShadow(

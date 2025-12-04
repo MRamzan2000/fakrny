@@ -41,9 +41,9 @@ class _VoiceSoundAlertUIState extends State<VoiceSoundAlertUI> {
           /// TITLE + SWITCH
           Row(
             children: [
-              const Text(
+              Text(
                 "Voice & Sound Alert",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                style: AppTextStyles.smallTextStyle,
               ),
               const Spacer(),
 
@@ -64,7 +64,7 @@ class _VoiceSoundAlertUIState extends State<VoiceSoundAlertUI> {
                   onTap: () => alertType.value = "voice",
                 ),
                 horizontalSpace(2.w),
-                Text("Voice Alert", style: TextStyle(fontSize: 15.sp)),
+                Text("Voice Alert", style: TextStyle(fontSize: 17.sp)),
               ],
             ),
             verticalSpace(1.h),
@@ -90,7 +90,7 @@ class _VoiceSoundAlertUIState extends State<VoiceSoundAlertUI> {
                   onTap: () => alertType.value = "custom",
                 ),
                 horizontalSpace( 2.w),
-                Text("Custom Text-to-Speech Alert", style: TextStyle(fontSize: 15.sp)),
+                Text("Custom Text-to-Speech Alert", style: TextStyle(fontSize: 17.sp)),
               ],
             ),
             verticalSpace(1.h),
@@ -123,7 +123,7 @@ class _VoiceSoundAlertUIState extends State<VoiceSoundAlertUI> {
             isExpanded: true,
             hint: Text(
               hint,
-              style: AppTextStyles.smallTextStyle.copyWith(color: Colors.grey),
+              style: AppTextStyles.smallTextStyle.copyWith(color: Colors.grey,fontSize: 17.sp),
             ),
             value: selectedValue.value,
             items: items
@@ -134,6 +134,7 @@ class _VoiceSoundAlertUIState extends State<VoiceSoundAlertUI> {
                   item,
                   style: AppTextStyles.smallTextStyle.copyWith(
                     color: AppColors.textColor,
+                    fontSize: 16.sp
                   ),
                 ),
               ),

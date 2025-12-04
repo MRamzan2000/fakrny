@@ -16,188 +16,190 @@ class MyMedsScreen extends StatelessWidget {
     final List<Map<String, dynamic>> medicines = [
       {
         "image": "assets/images/risek.png",
-        "name": "Risek",
-        "dosage": "3 times per day | 1 Capsule",
-        "details": "Started 25 July | 10 Capsules remain"
+        "name": "Risek".tr,
+        "dosage": "dosage_3_times_day".tr,
+        "details": "details_started_july".tr
       },
       {
         "image": "assets/images/captopril.png",
-        "name": "Captopril",
-        "dosage": "1 time per day | 1 Capsule",
-        "details": "Started 25 July | 10 Capsules remain"
+        "name": "Captopril".tr,
+        "dosage": "dosage_1_time_day".tr,
+        "details": "details_started_july".tr
       },
       {
-        "image": "assets/images/sudafed.png", // Assume asset for I-DROP MGD
-        "name": "I-DROP MGD",
-        "dosage": "2 times per day | 2 Drops",
-        "details": "Started 25 July | 10 Drops remain"
+        "image": "assets/images/sudafed.png",
+        "name": "I-DROP MGD".tr,
+        "dosage": "dosage_2_times_day_drops".tr,
+        "details": "details_started_july_drops".tr
       },
     ];
 
-    return DefaultTabController(length: 2, child:  Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.white,
-        automaticallyImplyLeading: false,
-        title:  Text(
-          "My medication",
-          style: AppTextStyles.semiBoldTextStyle.copyWith(
-            fontSize: 18.sp,
-            color: AppColors.textColor,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: AppColors.white,
+          automaticallyImplyLeading: false,
+          title: Text(
+            "my_medication".tr,
+            style: AppTextStyles.semiBoldTextStyle.copyWith(
+              fontSize: 20.sp,
+              color: AppColors.textColor,
+            ),
           ),
-        ),),
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        ),
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                verticalSpace(3.h),
 
-              verticalSpace(3.h),
-         Container(
-           padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: .5.h),
-           height: 6.h,
-           width: double.infinity,
-           decoration: BoxDecoration(
-             color: AppColors.white,
-             borderRadius: BorderRadius.circular(25.px),
-             boxShadow: [
-               BoxShadow(
-                 color: Colors.black.withOpacity(0.08),
-                 blurRadius: 22,
-                 spreadRadius: 1,
-                 offset: const Offset(0, 6),
-               ),
-             ]
-           ),
-           child:  TabBar(
-             labelStyle:AppTextStyles.smallTextStyle.copyWith(
-                 color: AppColors.textColor
-             ) ,
-             tabs: [
-             Row(mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-               Tab(text: 'Active'),
-               horizontalSpace(2.w),
-               Container(
-                 padding: EdgeInsets.all(.5.h),
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(70.px),
-                   color: Color(0xff0B2455)
-                 ),
-                 child: Text("2",style: AppTextStyles.smallTextStyle.copyWith(
-                   color: AppColors.white
-                 ),),
-               )
-             ],),
-               Row(mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   Tab(text: 'Ended '),
-                   horizontalSpace(2.w),
-                   Container(
-                     padding: EdgeInsets.all(.5.h),
-                     decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(70.px),
-                         color: Color(0xff0B2455)
-                     ),
-                     child: Text("1",style: AppTextStyles.smallTextStyle.copyWith(
-                         color: AppColors.white
-                     ),),
-                   )
-                 ],),
-             ],
-             indicatorPadding: EdgeInsets.zero,
-             indicatorSize:TabBarIndicatorSize.tab ,
-             padding: EdgeInsets.zero,
-             labelPadding: EdgeInsets.zero,
+                // Active / Ended Tabs
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: .5.h),
+                  height: 6.h,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(25.px),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 22,
+                        spreadRadius: 1,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: TabBar(
+                    labelStyle: AppTextStyles.smallTextStyle.copyWith(color: AppColors.textColor),
+                    tabs: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Tab(text: 'active'.tr),
+                          horizontalSpace(2.w),
+                          Container(
+                            padding: EdgeInsets.all(.5.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(70.px),
+                              color: const Color(0xff0B2455),
+                            ),
+                            child: Text("2", style: AppTextStyles.smallTextStyle.copyWith(color: AppColors.white)),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Tab(text: 'ended'.tr),
+                          horizontalSpace(2.w),
+                          Container(
+                            padding: EdgeInsets.all(.5.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(70.px),
+                              color: const Color(0xff0B2455),
+                            ),
+                            child: Text("1", style: AppTextStyles.smallTextStyle.copyWith(color: AppColors.white)),
+                          ),
+                        ],
+                      ),
+                    ],
+                    indicatorPadding: EdgeInsets.zero,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    padding: EdgeInsets.zero,
+                    labelPadding: EdgeInsets.zero,
+                    dividerColor: Colors.transparent,
+                    indicator: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    labelColor: AppColors.white,
+                    unselectedLabelColor: AppColors.grey,
+                  ),
+                ),
 
-             dividerColor: Colors.transparent,
-             indicator: BoxDecoration(
-               color: AppColors.primaryColor,
-               borderRadius: BorderRadius.circular(25),
-             ),
-             labelColor: AppColors.white,
-             unselectedLabelColor: AppColors.grey,
-           ),
-         ),
+                verticalSpace(4.h),
 
-              verticalSpace(4.h),
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.zero,
-                  itemCount: medicines.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 2.h),
-                  itemBuilder: (context, index) {
-                    final item = medicines[index];
-                    return GestureDetector(
-                      onTap: (){
-                        Get.to(() =>  MedicineDetailScreen(title:  item["name"], image:  item["image"],));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.3.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18.sp),
-                          color: AppColors.white,
-                        ),
-                        child: Row(
-                          children: [
-                            /// IMAGE
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12.sp),
-                              child: Container(
-                                height: 10.h,
-                                color: const Color(0xffF6F6F6),
-                                child: Image.asset(
-                                  item["image"],
-                                  fit: BoxFit.contain,
+                // Medicine List
+                Expanded(
+                  child: ListView.separated(
+                    padding: EdgeInsets.zero,
+                    itemCount: medicines.length,
+                    separatorBuilder: (context, index) => SizedBox(height: 2.h),
+                    itemBuilder: (context, index) {
+                      final item = medicines[index];
+                      return GestureDetector(
+                        onTap: () => Get.to(() => MedicineDetailScreen(title: item["name"], image: item["image"])),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.3.h),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18.sp),
+                            color: AppColors.white,
+                            boxShadow: [
+                              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4)),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              // IMAGE
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12.sp),
+                                child: Container(
+                                  height: 10.h,
+                                  color: const Color(0xffF6F6F6),
+                                  child: Image.asset(item["image"], fit: BoxFit.contain),
                                 ),
                               ),
-                            ),
-                            horizontalSpace(4.w),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item["name"],
-                                    style: AppTextStyles.semiBoldTextStyle.copyWith(
-                                      fontSize: 16.sp,
-                                      color: Color(0xff353535),
+                              horizontalSpace(4.w),
+
+                              // TEXT
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item["name"],
+                                      style: AppTextStyles.semiBoldTextStyle.copyWith(
+                                        fontSize: 18.sp,
+                                        color: const Color(0xff353535),
+                                      ),
                                     ),
-                                  ),
-                                  verticalSpace(0.5.h),
-                                  Text(
-                                    item["dosage"],
-                                    style: AppTextStyles.smallTextStyle.copyWith(
-                                      fontSize: 15.sp,
-                                      color: Color(0xff353535),
+                                    verticalSpace(0.5.h),
+                                    Text(
+                                      item["dosage"],
+                                      style: AppTextStyles.smallTextStyle.copyWith(
+                                        fontSize: 16.sp,
+                                        color: const Color(0xff353535),
+                                      ),
                                     ),
-                                  ),
-                                  verticalSpace(1.h),
-                                  Text(
-                                    item["details"],
-                                    style: AppTextStyles.smallTextStyle.copyWith(
-                                      fontSize: 14.sp,
-                                      color: Color(0xff353535),
+                                    verticalSpace(1.h),
+                                    Text(
+                                      item["details"],
+                                      style: AppTextStyles.smallTextStyle.copyWith(
+                                        fontSize: 14.sp,
+                                        color: const Color(0xff353535),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
-
-
 }

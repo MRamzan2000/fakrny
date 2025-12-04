@@ -15,11 +15,7 @@ class DoctorPrescriptionScreen extends StatelessWidget {
   final RxList<Map<String, dynamic>> medicines = <Map<String, dynamic>>[
     {"image": "assets/images/risek.png", "name": "Risek", "mg": "20mg"},
     {"image": "assets/images/captopril.png", "name": "Captopril", "mg": "20mg"},
-    {
-      "image": "assets/images/sudafed.png",
-      "name": "Sudafed Blocked Nose",
-      "mg": "20mg",
-    },
+    {"image": "assets/images/sudafed.png", "name": "Sudafed Blocked Nose", "mg": "20mg"},
   ].obs;
 
   @override
@@ -29,13 +25,13 @@ class DoctorPrescriptionScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            appBar(title: "Doctor Prescription"),
+            appBar(title: "doctor_prescription".tr),
             verticalSpace(4.h),
 
             /// LIST
             Expanded(
               child: Obx(
-                () => ListView.separated(
+                    () => ListView.separated(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                   itemCount: medicines.length,
                   separatorBuilder: (c, i) => SizedBox(height: 2.h),
@@ -45,20 +41,12 @@ class DoctorPrescriptionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () {
-                              Get.to(() => AddMedicineScreenDetails());
-                            },
+                            onTap: () => Get.to(() => AddMedicineScreenDetails()),
                             child: Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 4.w,
-                                vertical: 1.3.h,
-                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.3.h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(18),
-                                border: Border.all(
-                                  color: AppColors.grey,
-                                  width: 1,
-                                ),
+                                border: Border.all(color: AppColors.grey, width: 1),
                                 color: Colors.white,
                               ),
                               child: Row(
@@ -69,10 +57,7 @@ class DoctorPrescriptionScreen extends StatelessWidget {
                                     child: Container(
                                       height: 10.h,
                                       color: const Color(0xffF6F6F6),
-                                      child: Image.asset(
-                                        item["image"],
-                                        fit: BoxFit.contain,
-                                      ),
+                                      child: Image.asset(item["image"], fit: BoxFit.contain),
                                     ),
                                   ),
 
@@ -80,25 +65,22 @@ class DoctorPrescriptionScreen extends StatelessWidget {
 
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          item["name"],
-                                          style: AppTextStyles.semiBoldTextStyle
-                                              .copyWith(
-                                                fontSize: 17.sp,
-                                                color: AppColors.textColor,
-                                              ),
+                                          item["name"].toString().tr,
+                                          style: AppTextStyles.semiBoldTextStyle.copyWith(
+                                            fontSize: 18.sp,
+                                            color: AppColors.textColor,
+                                          ),
                                         ),
                                         verticalSpace(0.5.h),
                                         Text(
-                                          item["mg"],
-                                          style: AppTextStyles.smallTextStyle
-                                              .copyWith(
-                                                fontSize: 15.sp,
-                                                color: Colors.black54,
-                                              ),
+                                          item["mg"].toString().tr,
+                                          style: AppTextStyles.smallTextStyle.copyWith(
+                                            fontSize: 16.sp,
+                                            color: Colors.black54,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -111,11 +93,7 @@ class DoctorPrescriptionScreen extends StatelessWidget {
                         horizontalSpace(2.w),
                         GestureDetector(
                           onTap: () => medicines.removeAt(index),
-                          child: Icon(
-                            Icons.close_rounded,
-                            color: Colors.red,
-                            size: 24.sp,
-                          ),
+                          child: Icon(Icons.close_rounded, color: Colors.red, size: 24.sp),
                         ),
                       ],
                     );
@@ -129,7 +107,11 @@ class DoctorPrescriptionScreen extends StatelessWidget {
             /// NEXT BUTTON
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: CustomButton(height: 5.5.h, title: "Next", onTap: () {}),
+              child: CustomButton(
+                height: 5.5.h,
+                title: "next".tr,
+                onTap: () {},
+              ),
             ),
             verticalSpace(7.h),
           ],

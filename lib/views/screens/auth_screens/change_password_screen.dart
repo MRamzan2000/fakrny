@@ -6,6 +6,7 @@ import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:get/get.dart'; // ← .tr ke liye zaroori
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -34,8 +35,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           width: MediaQuery.sizeOf(context).width,
           child: Column(
             children: [
-              appBar(title: "Change Password"),
+              // AppBar title bhi translate ho jayega
+              appBar(title: "change_password".tr),
               verticalSpace(4.h),
+
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6.w),
                 child: Column(
@@ -44,16 +47,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          "Previous Password",
-                          style: AppTextStyles.smallTextStyle,
-                        ),
+                        Text("previous_password".tr, style: AppTextStyles.smallTextStyle),
                       ],
                     ),
                     verticalSpace(.4.h),
 
                     customTextField(
-                      hintText: "Enter Previous Password",
+                      hintText: "hint_previous_password".tr,
                       controller: previousPassword,
                       iconPath: "assets/icons/password.svg",
                       isPassword: true,
@@ -61,11 +61,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       suffixIcon: obscurePrev
                           ? SvgPicture.asset("assets/icons/eye_off.svg")
                           : SvgPicture.asset("assets/icons/eye_on.svg"),
-                      onSuffixTap: () {
-                        setState(() {
-                          obscurePrev = !obscurePrev;
-                        });
-                      },
+                      onSuffixTap: () => setState(() => obscurePrev = !obscurePrev),
                     ),
 
                     verticalSpace(1.6.h),
@@ -74,16 +70,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          "New Password",
-                          style: AppTextStyles.smallTextStyle,
-                        ),
+                        Text("new_password".tr, style: AppTextStyles.smallTextStyle),
                       ],
                     ),
                     verticalSpace(.4.h),
 
                     customTextField(
-                      hintText: "Enter New Password",
+                      hintText: "hint_new_password".tr,
                       controller: newPassword,
                       iconPath: "assets/icons/password.svg",
                       isPassword: true,
@@ -91,11 +84,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       suffixIcon: obscureNew
                           ? SvgPicture.asset("assets/icons/eye_off.svg")
                           : SvgPicture.asset("assets/icons/eye_on.svg"),
-                      onSuffixTap: () {
-                        setState(() {
-                          obscureNew = !obscureNew;
-                        });
-                      },
+                      onSuffixTap: () => setState(() => obscureNew = !obscureNew),
                     ),
 
                     verticalSpace(1.6.h),
@@ -104,16 +93,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          "Confirm Password",
-                          style: AppTextStyles.smallTextStyle,
-                        ),
+                        Text("confirm_password".tr, style: AppTextStyles.smallTextStyle),
                       ],
                     ),
                     verticalSpace(.4.h),
 
                     customTextField(
-                      hintText: "Enter Confirm Password",
+                      hintText: "hint_confirm_password".tr,
                       controller: confirmPassword,
                       iconPath: "assets/icons/password.svg",
                       isPassword: true,
@@ -121,11 +107,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       suffixIcon: obscureConfirm
                           ? SvgPicture.asset("assets/icons/eye_off.svg")
                           : SvgPicture.asset("assets/icons/eye_on.svg"),
-                      onSuffixTap: () {
-                        setState(() {
-                          obscureConfirm = !obscureConfirm;
-                        });
-                      },
+                      onSuffixTap: () => setState(() => obscureConfirm = !obscureConfirm),
                     ),
 
                     verticalSpace(5.h),
@@ -134,9 +116,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: CustomButton(
                         height: 5.5.h,
-                        title: "Save",
+                        title: "save".tr,
                         onTap: () {
-                          // Submit logic
+                          // Submit logic here
                         },
                       ),
                     ),

@@ -1,7 +1,10 @@
+import 'package:fakrny/utils/my_shared_pref.dart';
 import 'package:fakrny/views/reused_widgets/elevated_button.dart';
 import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
+import 'package:fakrny/views/screens/auth_screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'app_colors.dart' show AppColors;
@@ -266,6 +269,7 @@ void showLogoutDialog(BuildContext context) {
                       title: "Cancel",
                       height: 5.2.h,
                       borderRadius: BorderRadius.circular(30.sp),
+                      border: Border.all(color: Colors.transparent),
                       gradient: const LinearGradient(
                         colors: [Color(0xffD8D8D8), Color(0xffD8D8D8)],
                       ),
@@ -281,12 +285,14 @@ void showLogoutDialog(BuildContext context) {
                       title: "Logout",
                       height: 5.2.h,
                       borderRadius: BorderRadius.circular(30.sp),
+                      border: Border.all(color: Colors.transparent),
                       isGradient: true,
                       gradient: const LinearGradient(
                         colors: [Color(0xffFF5F57), Color(0xffFF5F57)],
                       ),
                       onTap: () {
-                        Navigator.pop(context, true);
+                        SharedPrefHelper.logout();
+                        Get.offAll(()=>LoginScreen());
                       },
                     ),
                   ),

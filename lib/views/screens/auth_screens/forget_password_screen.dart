@@ -11,29 +11,45 @@ import 'package:get/get.dart';
 
 import 'verify_otp_screen.dart';
 
-class ForgetPasswordScreen extends StatelessWidget {
-  ForgetPasswordScreen({super.key});
+class ForgetPasswordScreen extends StatefulWidget {
+  const ForgetPasswordScreen({super.key});
 
+  @override
+  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
+}
+
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final AuthController controller = Get.put(AuthController());
+  final TextEditingController emailCtrl = TextEditingController();
+
+  @override
+  void dispose() {
+    emailCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/images/blur_bg.png"),fit: BoxFit.fitWidth)
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/blur_bg.png"),
+            fit: BoxFit.fitWidth,
+          ),
         ),
         height: MediaQuery.sizeOf(context).height,
         width: MediaQuery.sizeOf(context).width,
         child: Stack(
           children: [
+            // Top logo + app name
             Positioned(
-                top: 22.h,
-                left: 0,
-                right: 0,
-                child:Column(children: [
+              top: 22.h,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
                   Transform.scale(
                     scale: 0.13.h,
                     child: SvgPicture.asset(
@@ -45,19 +61,24 @@ class ForgetPasswordScreen extends StatelessWidget {
                     ),
                   ),
                   verticalSpace(1.5.h),
-                  Text("Fakrny", style: AppTextStyles.boldTextStyle.copyWith(
-                    color:  Colors.white.withOpacity(0.4),
-                  )),
                   Text(
-                    "Your Smart Partner for Timely\n Medication",
+                    "app_name".tr,
+                    style: AppTextStyles.boldTextStyle.copyWith(
+                      color: Colors.white.withOpacity(0.4),
+                    ),
+                  ),
+                  Text(
+                    "splash_subtitle".tr,
                     style: AppTextStyles.semiBoldTextStyle.copyWith(
-                      color:  Colors.white.withOpacity(0.4),
+                      color: Colors.white.withOpacity(0.4),
                     ),
                     textAlign: TextAlign.center,
                   ),
-                ],)
+                ],
+              ),
             ),
 
+            // Main card
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -77,65 +98,70 @@ class ForgetPasswordScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
-                      Text("Forgot Password", style: AppTextStyles.boldTextStyle.copyWith(
-                        color: AppColors.black,
-
-                      )),
+                      Text(
+                        "forgot_password_title".tr,
+                        style: AppTextStyles.boldTextStyle.copyWith(
+                          color: AppColors.black,
+                          fontSize: 22.sp,
+                        ),
+                      ),
                       verticalSpace(0.4.h),
-
-                      Text("A verification code will be sent to your email to\n reset your password.", style: AppTextStyles.smallTextStyle,
-                        textAlign: TextAlign.center,),
+                      Text(
+                        "forgot_password_desc".tr,
+                        style: AppTextStyles.smallTextStyle.copyWith(fontSize: 16.sp),
+                        textAlign: TextAlign.center,
+                      ),
                       verticalSpace(3.h),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("Email", style: AppTextStyles.smallTextStyle),
+                          Text("email".tr, style: AppTextStyles.smallTextStyle),
                         ],
                       ),
                       verticalSpace(.4.h),
 
-                      /// Email Field
+                      // Email Field
                       customTextField(
-                        hintText: "My Email",
-                        controller: controller.forgotEmailCtrl,
+                        hintText: "hint_email".tr,
+                        controller: emailCtrl,
                         iconPath: "assets/icons/email.svg",
                       ),
-
                       verticalSpace(6.h),
 
-
-                      CustomButton(height: 5.5.h, title: "Send Verification Code", onTap: () {
-                        Get.to(()=>VerifyOtpScreen());
-                      }),
-
+                      // Send Verification Button
+                      CustomButton(
+                        height: 5.5.h,
+                        title: "send_verification_code".tr,
+                        onTap: () {
+                          controller.forgotPassword(email: emailCtrl.text);
+                        },
+                      ),
                       verticalSpace(2.h),
-
-
-
-
                     ],
                   ),
                 ),
               ),
             ),
-            Positioned(bottom: 38.h,
-                left: 0,
-                right: 0,
-                child:   SizedBox(
-                  height: 12.h,
-                  width: 12.h,
-                  child:   Image.asset("assets/images/forgot_password.png"),
-                ))
+
+            // Bottom illustration
+            Positioned(
+              bottom: 40.h,
+              left: 0,
+              right: 0,
+              child: SizedBox(
+                height: 12.h,
+                width: 12.h,
+                child: Image.asset("assets/images/forgot_password.png"),
+              ),
+            ),
           ],
         ),
-      )
+      ),
     );
   }
 }

@@ -1,41 +1,71 @@
 import 'dart:io';
-
 import 'package:fakrny/utils/app_colors.dart';
+import 'package:fakrny/utils/app_translations.dart';
+import 'package:fakrny/utils/my_shared_pref.dart';
 import 'package:fakrny/views/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-void main() async{
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Firebase Initialization
+
+  // Firebase
   final firebaseOptions = FirebaseOptions(
     apiKey: Platform.isAndroid
-        ? 'AIzaSyAhempqegwQedLVwhScQeQdIwM_OHLx-ME'
-        : 'AIzaSyBjtAgCsrbCqG02tHe9upMM2BK5N_748_g',
+        ? 'AIzaSyD95x9NDrduxVVPex_vPBJo4i6yGYvz2_8'
+        : 'AIzaSyCqvHxHdt8yVuWwP5jXPkJkXaiMFr1-6cI',
     appId: Platform.isAndroid
-        ? '1:206987515302:android:1c3164c1a80064e5ef2b67'
-        : '1:206987515302:ios:d0c787504291a648ef2b67',
-    messagingSenderId: '206987515302',
-    projectId: 'fakrny-app-57294',
+        ? '1:1009934192640:android:af7430ccb69847109548e5'
+        : '1:1009934192640:ios:c0d875ceed6098139548e5',
+    messagingSenderId: '1009934192640',
+    projectId: 'fakrny-8537b',
   );
-  await Firebase.initializeApp(
-    options: firebaseOptions
-  );
-  runApp(MyApp());
+  await Firebase.initializeApp(options: firebaseOptions);
+  await SharedPrefHelper.init();
+
+  runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final savedLocale = SharedPrefHelper.getSavedLanguage();
     return ResponsiveSizer(
-      builder: (buildContext, orientation, screenType) =>
-          GetMaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                  scaffoldBackgroundColor: AppColors.white
-              ),
-              home: SplashScreen()),
+      builder: (context, orientation, screenType) => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en', 'US'),
+          Locale('ar', 'SA'),
+        ],
+        translations: AppTranslations(),
+        locale: savedLocale,
+        fallbackLocale: const Locale('en', 'US'),
+        builder: (context, child) {
+          return Directionality(
+            textDirection: Get.locale?.languageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+            child: child!,
+          );
+        },
+
+        title: "app_name".tr,
+        theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.white,
+          fontFamily: "SfPro",
+          useMaterial3: true,
+        ),
+
+        home: const SplashScreen(),
+      ),
     );
   }
 }

@@ -27,7 +27,7 @@ Widget appBar({
           ),
           Text(title,style: AppTextStyles.boldTextStyle.copyWith(
               color: AppColors.textColor,
-              fontSize: 19.sp,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w500
           ),),
           Expanded(

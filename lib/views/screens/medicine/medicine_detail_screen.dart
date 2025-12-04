@@ -22,66 +22,57 @@ class MedicineDetailScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // AppBar
-        Container(
-          color: AppColors.appBarColor,
-          child: Row(
-            children: [
-              Expanded(child: appBar(title: title)),
-              Padding(
-                padding: EdgeInsets.only(right: 4.w),
-                child:InkWell(
-                  onTap: (){
-                    Get.to(()=>AddMedicineScreenDetails());
-                  },
-                  child:  Text(
-                    "Edit",
-                    style: AppTextStyles.regularTextStyle.copyWith(
-                      color: AppColors.primaryColor,
-                      fontSize: 17.sp,
+            Container(
+              color: AppColors.appBarColor,
+              child: Row(
+                children: [
+                  Expanded(child: appBar(title: title)), // title already dynamic
+                  Padding(
+                    padding: EdgeInsets.only(right: 4.w),
+                    child: InkWell(
+                      onTap: () => Get.to(() => AddMedicineScreenDetails()),
+                      child: Text(
+                        "Edit".tr,
+                        style: AppTextStyles.regularTextStyle.copyWith(
+                          color: AppColors.primaryColor,
+                          fontSize: 17.sp,
+                        ),
+                      ),
                     ),
                   ),
-                )
+                ],
               ),
-            ],
-          ),
-        ),
-
+            ),
 
             Expanded(
               child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 0),
+                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Medicine Image
                     Center(
-                      child: Image.asset(
-                      image,
-                        height: 35.h,
-                        fit: BoxFit.contain,
-                      ),
+                      child: Image.asset(image, height: 35.h, fit: BoxFit.contain),
                     ),
-
 
                     // Medicine Name
                     _buildInfoRow(
                       icon: "assets/icons/name_medi.svg",
-                      label: "Medicine Name",
-                      value: "Risek",
+                      label: "medicine_name".tr,
+                      value: "Risek".tr,
                     ),
                     verticalSpace(1.h),
-                    Divider(),
+                    const Divider(),
                     verticalSpace(.5.h),
 
                     // Dosage
                     _buildInfoRow(
                       icon: "assets/icons/dosage_medi.svg",
-                      label: "Medicine Dosage(mg, ml, mcg, IU, etc.)",
-                      value: "20",
+                      label: "medicine_dosage_label".tr,
+                      value: "20".tr,
                     ),
                     verticalSpace(1.h),
-                    Divider(),
+                    const Divider(),
                     verticalSpace(.5.h),
 
                     // Dose & Stock Row
@@ -90,74 +81,45 @@ class MedicineDetailScreen extends StatelessWidget {
                         Expanded(
                           child: _buildSmallInfo(
                             icon: "assets/icons/dose_medi.svg",
-                            label: "Medicine Dose",
-                            value: "1 Capsule",
+                            label: "medicine_dose".tr,
+                            value: "1_capsule".tr,
                           ),
                         ),
                         horizontalSpace(4.w),
                         Expanded(
                           child: _buildSmallInfo(
                             icon: "assets/icons/stock_medi.svg",
-                            label: "Medicine Stock",
-                            value: "24",
+                            label: "medicine_stock".tr,
+                            value: "24".tr,
                           ),
                         ),
                       ],
                     ),
                     verticalSpace(1.h),
-                    Divider(),
+                    const Divider(),
                     verticalSpace(.5.h),
 
                     // Dosage Frequency & Time Section
-                    Text(
-                      "Dosage Frequency & Time",
-                      style: AppTextStyles.semiBoldTextStyle.copyWith(
-                        fontSize: 17.sp,
-                        color: AppColors.textColor,
-                      ),
-                    ),
-
+                    Text("dosage_frequency_time".tr, style: AppTextStyles.semiBoldTextStyle.copyWith(fontSize: 17.sp, color: AppColors.textColor)),
                     verticalSpace(1.h),
 
                     // Start & End Date
                     Row(
                       children: [
-                        Expanded(
-                          child: _buildDateBox(
-                            label: "Start Date",
-                            date: "12-Jan-2025",
-                          ),
-                        ),
+                        Expanded(child: _buildDateBox(label: "start_date".tr, date: "12-Jan-2025".tr)),
                         horizontalSpace(3.w),
-                        Expanded(
-                          child: _buildDateBox(
-                            label: "End Date",
-                            date: "15-Jan-2025",
-                          ),
-                        ),
+                        Expanded(child: _buildDateBox(label: "end_date".tr, date: "15-Jan-2025".tr)),
                       ],
                     ),
 
                     verticalSpace(1.h),
-                    Divider(),
+                    const Divider(),
                     verticalSpace(.5.h),
 
                     // Frequency
-                    Text(
-                      "Dosage Frequency",
-                      style:AppTextStyles.semiBoldTextStyle.copyWith(
-                        fontSize: 17.sp,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.textColor,
-                      ),
-                    ),
+                    Text("dosage_frequency".tr, style: AppTextStyles.semiBoldTextStyle.copyWith(fontSize: 17.sp, fontWeight: FontWeight.w400, color: AppColors.textColor)),
                     verticalSpace(0.8.h),
-                    Text(
-                      "3 times per day",
-                      style: AppTextStyles.regularTextStyle.copyWith(
-                        fontSize: 16.sp,
-                      ),
-                    ),
+                    Text("3_times_per_day".tr, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp)),
 
                     verticalSpace(1.h),
 
@@ -165,84 +127,50 @@ class MedicineDetailScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _buildTimeBox("1 Dose Time", "09:00 AM"),
-                        _buildTimeBox("2 Dose Time", "02:00 PM"),
-                        _buildTimeBox("3 Dose Time", "08:00 PM"),
+                        _buildTimeBox("1_dose_time".tr, "09:00 AM".tr),
+                        _buildTimeBox("2_dose_time".tr, "02:00 PM".tr),
+                        _buildTimeBox("3_dose_time".tr, "08:00 PM".tr),
                       ],
                     ),
 
                     verticalSpace(1.h),
-                    Divider(),
+                    const Divider(),
                     verticalSpace(.5.h),
 
                     // Medicine Instructions
-                    Text(
-                      "Medicine Instructions",
-                      style: AppTextStyles.semiBoldTextStyle.copyWith(
-                        fontSize: 17.sp,
-                        color: AppColors.textColor,
-                      ),
-                    ),
-
+                    Text("medicine_instructions".tr, style: AppTextStyles.semiBoldTextStyle.copyWith(fontSize: 17.sp, color: AppColors.textColor)),
                     verticalSpace(1.h),
 
-                    // How it should be taken
-                    _buildInstructionRow(
-                      "How it should be taken",
-                      "Empty Stomach",
-                    ),
-
+                    _buildInstructionRow("how_to_take".tr, "empty_stomach".tr),
                     verticalSpace(1.h),
-                    Divider(),
+                    const Divider(),
                     verticalSpace(.5.h),
-                    // Special instructions
-                    _buildInstructionRow(
-                      "Special instructions",
-                      "Take with milk",
-                    ),
 
+                    _buildInstructionRow("special_instructions".tr, "take_with_milk".tr),
                     verticalSpace(1.h),
-                    Divider(),
+                    const Divider(),
                     verticalSpace(.5.h),
 
                     // Voice & Sound Alert
-                    Text(
-                      "Voice & Sound Alert",
-                      style: AppTextStyles.semiBoldTextStyle.copyWith(
-                        fontSize: 17.sp,
-                        color: AppColors.textColor,
-                      ),
-                    ),
+                    Text("voice_sound_alert".tr, style: AppTextStyles.semiBoldTextStyle.copyWith(fontSize: 17.sp, color: AppColors.textColor)),
                     verticalSpace(1.h),
-                    Text(
-                      "Voice Alert",
-                      style: AppTextStyles.smallTextStyle,
-                    ),
+                    Text("voice_alert".tr, style: AppTextStyles.smallTextStyle),
                     verticalSpace(.3.h),
-                    Text(
-                      "It's time to take your white pill after your meal.",
-                      style: AppTextStyles.regularTextStyle.copyWith(
-                        fontSize: 16.sp,
-                      ),
-                    ),
+                    Text("voice_alert_message".tr, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp)),
                     verticalSpace(1.h),
-                    Divider(),
+                    const Divider(),
                     verticalSpace(.5.h),
 
-
-                    // Next Button
+                    // Stop Button
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: CustomButton(
                         height: 5.5.h,
-                        title: "Stop",
-                        onTap: () {
-                          showStopMedicineDialog(context);
-                        },
+                        title: "stop_medicine".tr,
+                        onTap: () => showStopMedicineDialog(context),
                       ),
                     ),
 
-                    // Bottom padding
                     verticalSpace(7.h),
                   ],
                 ),
@@ -254,109 +182,70 @@ class MedicineDetailScreen extends StatelessWidget {
     );
   }
 
-  // Reusable Widgets
+  // Reusable Widgets (sab .tr ready)
+  Widget _buildInfoRow({required String icon, required String label, required String value}) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(label, style: AppTextStyles.smallTextStyle.copyWith(fontSize: 16.5.sp, fontWeight: FontWeight.w400)),
+      verticalSpace(.6.h),
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgPicture.asset(icon, height: 3.3.h),
+          horizontalSpace(2.w),
+          Text(value, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 17.sp)),
+        ],
+      ),
+    ],
+  );
 
-  Widget _buildInfoRow({
-    required String icon,
-    required String label,
-    required String value,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: AppTextStyles.smallTextStyle.copyWith(fontSize: 16.5.sp,fontWeight: FontWeight.w400)),
-        verticalSpace(.6.h),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset(icon, height: 3.3.h),
-            horizontalSpace(2.w),
-            Text(
-              value,
-              style: AppTextStyles.regularTextStyle.copyWith(fontSize: 17.sp),
-            ),
-          ],
-        ),
+  Widget _buildSmallInfo({required String icon, required String label, required String value}) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(label, style: AppTextStyles.smallTextStyle.copyWith(fontSize: 16.5.sp, fontWeight: FontWeight.w400)),
+      verticalSpace(.6.h),
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SvgPicture.asset(icon, height: 3.h),
+          horizontalSpace(2.w),
+          Text(value, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 15.5.sp)),
+        ],
+      ),
+    ],
+  );
 
+  Widget _buildDateBox({required String label, required String date}) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(label, style: AppTextStyles.smallTextStyle.copyWith(fontSize: 16.5.sp, fontWeight: FontWeight.w400)),
+      verticalSpace(0.8.h),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(date, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 15.5.sp)),
+          horizontalSpace(3.w),
+          SvgPicture.asset("assets/icons/date_medi.svg", height: 3.h),
+        ],
+      ),
+    ],
+  );
 
-      ],
-    );
-  }
+  Widget _buildTimeBox(String label, String time) => Column(
+    children: [
+      Text(label, style: AppTextStyles.smallTextStyle),
+      verticalSpace(0.8.h),
+      Text(time, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp)),
+    ],
+  );
 
-  Widget _buildSmallInfo({
-    required String icon,
-    required String label,
-    required String value,
-  }) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.smallTextStyle.copyWith(fontSize: 16.5.sp,fontWeight: FontWeight.w400)
-        ),
-        verticalSpace(.6.h),
-
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SvgPicture.asset(icon, height: 3.h),
-            horizontalSpace(2.w),
-            Text(
-              value,
-              style: AppTextStyles.regularTextStyle.copyWith(fontSize: 15.5.sp),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDateBox({required String label, required String date}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style:AppTextStyles.smallTextStyle.copyWith(fontSize: 16.5.sp,fontWeight: FontWeight.w400)),
-        verticalSpace(0.8.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              date,
-              style: AppTextStyles.regularTextStyle.copyWith(fontSize: 15.5.sp),
-            ),
-            horizontalSpace(3.w),
-            SvgPicture.asset("assets/icons/date_medi.svg", height: 3.h),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTimeBox(String label, String time) {
-    return Column(
-      children: [
-        Text(label, style: AppTextStyles.smallTextStyle),
-        verticalSpace(0.8.h),
-        Text(
-          time,
-          style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildInstructionRow(String title, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: AppTextStyles.smallTextStyle),
-        verticalSpace(0.8.h),
-        Text(
-          value,
-          style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp),
-        ),
-      ],
-    );
-  }
+  Widget _buildInstructionRow(String title, String value) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(title, style: AppTextStyles.smallTextStyle),
+      verticalSpace(0.8.h),
+      Text(value, style: AppTextStyles.regularTextStyle.copyWith(fontSize: 16.sp)),
+    ],
+  );
 }

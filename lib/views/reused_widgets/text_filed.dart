@@ -1,4 +1,3 @@
-// custom_input_field.dart
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
@@ -6,7 +5,7 @@ import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' hide TextDirection;
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CustomInputField extends StatelessWidget {
@@ -42,75 +41,101 @@ class CustomInputField extends StatelessWidget {
     this.maxLine,
   });
 
-  // Shared decoration
-  BoxDecoration get _decoration => BoxDecoration(
-    color: AppColors.white,
-    borderRadius: BorderRadius.circular(14.sp),
-    border: Border.all(color: AppColors.borderGrey,),
-  );
-
   @override
   Widget build(BuildContext context) {
+    final isArabic = Get.locale?.languageCode == "ar";
+
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        height: 6.h,
-        padding: EdgeInsets.symmetric(horizontal: 3.w),
-        decoration: _decoration,
-        child: Row(
-          children: [
-            // Prefix Icon
-            SvgPicture.asset(
-              prefixIconPath,
-              height: 3.2.h,
-              color: const Color(0xff1FB774),
-            ),
-            horizontalSpace(3.w),
-            Expanded(
-              child: child ??
-                  TextField(
-                    controller: controller,
-                    obscureText: obscureText,
-                    maxLines:maxLine??1 ,
-                    style: AppTextStyles.hintTextStyle,
-                    decoration: InputDecoration(
-                      isCollapsed: true,
-                      border: InputBorder.none,
-                      hintText: hintText,
-                      hintStyle: TextStyle(fontSize: 16.sp, color: Colors.grey),
-                    ),
-                  ),
-            ),
+      child: Focus(
+        child: Builder(
+          builder: (context) {
+            final isFocused = Focus.of(context).hasFocus;
 
-            // Trailing Icon (Chevron for dropdown/date, Eye for password)
-            if (trailingIcon != null || (isPassword && suffixIcon != null))
-              Padding(
-                padding: EdgeInsets.only(left: 2.w),
-                child: trailingIcon ??
-                    GestureDetector(
-                      onTap: onSuffixTap,
-                      child: suffixIcon,
-                    ),
+            return Container(
+              height: 6.h,
+              padding: EdgeInsets.symmetric(horizontal: 3.w),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(14.sp),
+                border: Border.all(
+                  color: isFocused ? AppColors.primaryColor : AppColors.borderGrey,
+                  width: 2,
+                ),
               ),
-          ],
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    prefixIconPath,
+                    height: 3.2.h,
+                    color: AppColors.primaryColor,
+                  ),
+                  horizontalSpace(3.w),
+
+                  // Main input widget
+                  Expanded(
+                    child: child ??
+                        Directionality(
+                          textDirection:
+                          isArabic ? TextDirection.rtl : TextDirection.ltr,
+                          child: TextField(
+                            cursorColor: AppColors.primaryColor,
+                            cursorHeight: 2.5.h,
+                            controller: controller,
+                            obscureText: obscureText,
+                            maxLines: maxLine ?? 1,
+                            style: AppTextStyles.regularTextStyle.copyWith(
+                              fontSize: 16.5.sp,
+                              color: Colors.black,
+                            ),
+                            textDirection:
+                            isArabic ? TextDirection.rtl : TextDirection.ltr,
+                            textAlign:
+                            isArabic ? TextAlign.right : TextAlign.left,
+                            decoration: InputDecoration(
+                              isCollapsed: true,
+                              border: InputBorder.none,
+                              hintText: hintText,
+                              hintStyle: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ),
+                  ),
+
+                  // Trailing Icon (Chevron for dropdown/date, Eye for password)
+                  if (trailingIcon != null || (isPassword && suffixIcon != null))
+                    Padding(
+                      padding: EdgeInsets.only(left: 2.w),
+                      child: trailingIcon ??
+                          GestureDetector(
+                            onTap: onSuffixTap,
+                            child: suffixIcon,
+                          ),
+                    ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
   }
 }
 
-// custom_text_field.dart
+/// Custom TextField
 Widget customTextField({
   required String hintText,
-   int? maxLine,
+  int? maxLine,
   required TextEditingController controller,
   required String iconPath,
   bool isPassword = false,
   bool obscureText = false,
   VoidCallback? onSuffixTap,
   Widget? suffixIcon,
-})
-{
+}) {
   return CustomInputField(
     hintText: hintText,
     prefixIconPath: iconPath,
@@ -123,10 +148,10 @@ Widget customTextField({
   );
 }
 
-
+/// Custom Dropdown
 Widget customDropdownField<T>({
   required String hint,
-   int? maxLine,
+  int? maxLine,
   required Rx<T?> selectedValue,
   required List<T> items,
   required String Function(T) label,
@@ -134,7 +159,7 @@ Widget customDropdownField<T>({
 }) {
   return CustomInputField(
     hintText: hint,
-    maxLine:maxLine,
+    maxLine: maxLine,
     prefixIconPath: prefixPath,
     trailingIcon: SvgPicture.asset(
       "assets/icons/down_arrow.svg",
@@ -152,10 +177,8 @@ Widget customDropdownField<T>({
           ),
           overflow: TextOverflow.ellipsis,
         ),
-
         value: selectedValue.value,
         onChanged: (v) => selectedValue.value = v,
-
         items: items.map((e) {
           return DropdownMenuItem<T>(
             value: e,
@@ -165,14 +188,12 @@ Widget customDropdownField<T>({
             ),
           );
         }).toList(),
-
         dropdownStyleData: DropdownStyleData(
           padding: EdgeInsets.zero,
           maxHeight: 35.h,
           width: MediaQuery.of(Get.context!).size.width * 0.4,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14.sp),
-            border: Border.all(color: AppColors.borderGrey, width: 2),
             color: AppColors.white,
           ),
           offset: const Offset(0, -8),
@@ -182,7 +203,8 @@ Widget customDropdownField<T>({
     ),
   );
 }
-// dob_picker.dart
+
+/// DOB Picker
 Widget dobPicker({
   required Rx<DateTime?> selectedDate,
   String hintText = "01-Jan-1990",
@@ -210,7 +232,10 @@ Widget dobPicker({
       selectedDate.value == null
           ? hintText
           : DateFormat('dd-MMM-yyyy').format(selectedDate.value!),
-      style: TextStyle(fontSize: 16.sp, color: Colors.grey),
+      style: TextStyle(
+        fontSize: 16.sp,
+        color: selectedDate.value == null ? Colors.grey : Colors.black,
+      ),
     )),
   );
 }

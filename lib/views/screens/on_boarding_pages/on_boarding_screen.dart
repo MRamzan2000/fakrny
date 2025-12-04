@@ -15,10 +15,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class OnBoardingScreen extends StatelessWidget {
   OnBoardingScreen({super.key});
 
-  final OnBoardingController onboardingController = Get.put(
-    OnBoardingController(),
-  );
-
+  final OnBoardingController onboardingController = Get.put(OnBoardingController());
   final pages = const [OnBoardingPage1(), OnBoardingPage2(), OnBoardingPage3()];
 
   @override
@@ -29,12 +26,11 @@ class OnBoardingScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 72.h,
+              height: 78.h,
               width: 100.w,
               child: PageView(
                 controller: onboardingController.pageController,
-                onPageChanged: (i) =>
-                    onboardingController.currentPage.value = i,
+                onPageChanged: (i) => onboardingController.currentPage.value = i,
                 children: pages,
               ),
             ),
@@ -53,47 +49,44 @@ class OnBoardingScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             const Spacer(),
             Padding(
-              padding: EdgeInsets.only(left: 6.w),
-              child: Obx(
-                () => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => WelcomeScreen());
-                      },
-                      child: Text(
-                        "Skip",
-                        style: AppTextStyles.smallTextStyle.copyWith(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w100,
+              padding: EdgeInsets.only(left: 6.w, right: 0),
+              child: Directionality(
+                textDirection: TextDirection.ltr,
+                child: Obx(
+                      () => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () => Get.to(() => WelcomeScreen()),
+                        child: Text(
+                          "skip".tr,
+                          style: AppTextStyles.smallTextStyle,
                         ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        if (onboardingController.currentPage.value == 2) {
-                          Get.to(() => WelcomeScreen());
-                        } else {
-                          onboardingController.nextPage();
-                        }
-                      },
-                      child: SvgPicture.asset(
-                        onboardingController.currentPage.value == 2
-                            ? "assets/icons/get_started.svg"
-                            : "assets/icons/next.svg",
-                        fit: BoxFit.contain,
+                      InkWell(
+                        onTap: () {
+                          if (onboardingController.currentPage.value == 2) {
+                            Get.to(() => WelcomeScreen());
+                          } else {
+                            onboardingController.nextPage();
+                          }
+                        },
+                        child: SvgPicture.asset(
+                          onboardingController.currentPage.value == 2
+                              ? "assets/icons/get_started.svg"
+                              : "assets/icons/next.svg",
+                          fit: BoxFit.contain,
+                          height: 5.h,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-
-            verticalSpace(5.h), // responsive spacing
+            verticalSpace(5.h),
           ],
         ),
       ),

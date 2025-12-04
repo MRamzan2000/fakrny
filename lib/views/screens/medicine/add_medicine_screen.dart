@@ -12,14 +12,14 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class AddMedicineScreen extends StatefulWidget {
-   const AddMedicineScreen({super.key});
+  const AddMedicineScreen({super.key});
 
   @override
   State<AddMedicineScreen> createState() => _AddMedicineScreenState();
 }
 
 class _AddMedicineScreenState extends State<AddMedicineScreen> {
-RxString isSelected="Manually".obs;
+  RxString isSelected = "Manually".obs;
 
   @override
   Widget build(BuildContext context) {
@@ -30,63 +30,64 @@ RxString isSelected="Manually".obs;
           width: 100.w,
           child: Column(
             children: [
-              appBar(title: "Add Medicine"),
-              Expanded(flex: 1,
-                  child: SizedBox()),
-              Expanded(flex: 2,
+              // AppBar title translate
+              appBar(title: "add_medicine".tr),
+
+              const Expanded(flex: 1, child: SizedBox()),
+
+              Expanded(
+                flex: 2,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Obx(
-                    ()=> Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap:(){
-                              isSelected.value="Manually";
-                            },
-                            child: _optionCard(
-                              iconPath: "assets/icons/manual_medicine.svg",
-                              title: "Manually",
-                              borderColor: isSelected.value=="Manually"?AppColors.primaryColor: const Color(0xff999999)
-                            ),
+                    Obx(() => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Manually Option
+                        GestureDetector(
+                          onTap: () => isSelected.value = "Manually",
+                          child: _optionCard(
+                            iconPath: "assets/icons/manual_medicine.svg",
+                            title: "manually".tr,
+                            borderColor: isSelected.value == "Manually"
+                                ? AppColors.primaryColor
+                                : const Color(0xff999999),
                           ),
-                          horizontalSpace(6.w),
-                          GestureDetector(
-                            onTap:(){
-                              isSelected.value="Scanning";
-                            },
-                            child: _optionCard(
-                              iconPath: "assets/icons/scan_medicine.svg",
-                              title: "Scanning",
-                                borderColor: isSelected.value=="Scanning"?AppColors.primaryColor: const Color(0xff999999)
+                        ),
+                        horizontalSpace(6.w),
 
-                            ),
+                        // Scanning Option
+                        GestureDetector(
+                          onTap: () => isSelected.value = "Scanning",
+                          child: _optionCard(
+                            iconPath: "assets/icons/scan_medicine.svg",
+                            title: "scanning".tr,
+                            borderColor: isSelected.value == "Scanning"
+                                ? AppColors.primaryColor
+                                : const Color(0xff999999),
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      ],
+                    )),
 
-                    Spacer(),
+                    const Spacer(),
 
                     // Next Button
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: CustomButton(
                         height: 5.5.h,
-                        title: "Next",
+                        title: "next".tr,
                         onTap: () {
-                          if(isSelected.value=="Manually"){
-                            Get.to(()=>AddMedicineScreenDetails());
-                          }else{
-                            Get.to(()=>ScanMedicine());
-
+                          if (isSelected.value == "Manually") {
+                            Get.to(() =>  AddMedicineScreenDetails());
+                          } else {
+                            Get.to(() => const ScanMedicine());
                           }
                         },
                       ),
                     ),
 
-                    // Bottom padding
                     verticalSpace(7.h),
                   ],
                 ),
@@ -98,13 +99,17 @@ RxString isSelected="Manually".obs;
     );
   }
 
-  // Reusable card widget for options
-  Widget _optionCard({required String iconPath, required String title,required Color borderColor}) {
+  // Reusable card widget – title ab .tr use karega
+  Widget _optionCard({
+    required String iconPath,
+    required String title,
+    required Color borderColor,
+  }) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.4.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.px),
-        border: Border.all(color:borderColor,width: 1.5),
+        border: Border.all(color: borderColor, width: 1.5),
       ),
       child: Column(
         children: [
@@ -117,7 +122,7 @@ RxString isSelected="Manually".obs;
             title,
             style: AppTextStyles.boldTextStyle.copyWith(
               color: AppColors.textColor,
-              fontSize: 17.sp,
+              fontSize: 19.sp,
               fontWeight: FontWeight.w500,
             ),
           ),

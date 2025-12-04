@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            appBar(title: "Profile"),
+            appBar(title: "profile".tr),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
               child: Column(
@@ -35,25 +35,25 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 5.h,
-                          backgroundImage: NetworkImage(
-                            "https://randomuser.me/api/portraits/men/46.jpg", // Replace with actual image if needed
+                          backgroundImage: const NetworkImage(
+                            "https://randomuser.me/api/portraits/men/46.jpg",
                           ),
                         ),
                         verticalSpace(.6.h),
+                        // Name dynamic hoga, agar controller se aaye to .tr nahi lagega
                         Text(
-                          "Mohsin",
+                          "Mohsin", // agar user ka name Arabic mein bhi show karna hai to controller se lo
                           style: AppTextStyles.semiBoldTextStyle.copyWith(
                             color: AppColors.textColor,
+                            fontSize: 18.sp,
                           ),
                         ),
                         verticalSpace(1.h),
                         CustomButton(
                           height: 3.5.h,
                           width: 24.w,
-                          title: "Edit",
-                          onTap: () {
-                            showEditProfileDialog(context);
-                          },
+                          title: "edit".tr,
+                          onTap: () => showEditProfileDialog(context),
                         ),
                       ],
                     ),
@@ -63,39 +63,36 @@ class ProfileScreen extends StatelessWidget {
 
                   _buildMenuItem(
                     icon: Icons.settings_outlined,
-                    title: "Settings",
+                    title: "settings".tr,
                     onTap: () => Get.to(() => const SettingsScreen()),
                   ),
                   verticalSpace(1.5.h),
+
                   _buildMenuItem(
                     icon: Icons.privacy_tip_outlined,
-                    title: "Privacy Policy",
-                    onTap: () {
-                      Get.to(()=>PrivacyPolicyScreen());
-                    },
+                    title: "privacy_policy".tr,
+                    onTap: () => Get.to(() => PrivacyPolicyScreen()),
                   ),
                   verticalSpace(1.5.h),
 
                   _buildMenuItem(
                     icon: Icons.star_border,
-                    title: "Rate Us",
+                    title: "rate_us".tr,
                     onTap: () {},
                   ),
                   verticalSpace(1.5.h),
 
                   _buildMenuItem(
                     icon: Icons.share_outlined,
-                    title: "Share",
+                    title: "share".tr,
                     onTap: () {},
                   ),
                   verticalSpace(1.5.h),
 
                   _buildMenuItem(
                     icon: Icons.logout,
-                    title: "Log out",
-                    onTap: () {
-                      showLogoutDialog(context);
-                    },
+                    title: "log_out".tr,
+                    onTap: () => showLogoutDialog(context),
                     color: Colors.red,
                   ),
                 ],
@@ -124,11 +121,7 @@ class ProfileScreen extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       ),
-      trailing: const Icon(
-        Icons.arrow_forward_ios,
-        size: 16,
-        color: Colors.black54,
-      ),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black54),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       tileColor: AppColors.appBarColor,
       onTap: onTap,

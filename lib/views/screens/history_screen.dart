@@ -1,7 +1,9 @@
 import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
+import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -28,53 +30,47 @@ class _HistoryScreenState extends State<HistoryScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpace(2.h),
-              Row(mainAxisAlignment: MainAxisAlignment.center,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "History",
+                    "history".tr,
                     style: AppTextStyles.boldTextStyle.copyWith(
-                        color: AppColors.textColor,
-                        fontSize: 19.sp,
-                        fontWeight: FontWeight.w500
+                      color: AppColors.textColor,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ],),
+                ],
+              ),
               verticalSpace(2.h),
-
 
               /// TODAY DATE
               Text(
-                "Today, July 25",
-                style:  AppTextStyles.boldTextStyle.copyWith(
-              color: AppColors.textColor,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500
-              ),
+                "today_date".tr, // "Today, July 25"
+                style: AppTextStyles.boldTextStyle.copyWith(
+                  color: AppColors.textColor,
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
 
               verticalSpace(2.h),
 
-              /// HORIZONTAL 7-DAY SELECTOR
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Icon(Icons.chevron_left),
-
                   ...List.generate(days.length, (index) {
                     final isSelected = index == selectedIndex;
 
                     return InkWell(
-                      onTap: () {
-                        setState(() => selectedIndex = index);
-                      },
+                      onTap: () => setState(() => selectedIndex = index),
                       child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 2.w, vertical: 1.h),
+                        padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: isSelected
-                              ? Border.all(color: AppColors.primaryColor, width: 2)
-                              : null,
+                          border: isSelected ? Border.all(color: AppColors.primaryColor, width: 2) : null,
                           color: isSelected ? Colors.green.withOpacity(0.1) : null,
                         ),
                         child: Column(
@@ -82,48 +78,42 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             Text(
                               days[index],
                               style: AppTextStyles.smallTextStyle.copyWith(
-                                color:
-                                isSelected ? AppColors.primaryColor : AppColors.textColor,
-                              )
-
+                                color: isSelected ? AppColors.primaryColor : AppColors.textColor,
+                              ),
                             ),
-                            SizedBox(height: 0.5.h),
+                            verticalSpace(0.5.h),
                             Text(
                               dates[index].toString(),
-                              style:  AppTextStyles.smallTextStyle.copyWith(
-                                color:
-                                isSelected ? AppColors.primaryColor : AppColors.textColor,
-                              )
+                              style: AppTextStyles.smallTextStyle.copyWith(
+                                color: isSelected ? AppColors.primaryColor : AppColors.textColor,
+                              ),
                             ),
                           ],
                         ),
                       ),
                     );
                   }),
-
                   const Icon(Icons.chevron_right),
                 ],
               ),
 
-              verticalSpace( 3.h),
+              verticalSpace(3.h),
 
-              /// SECTION TITLE
               Row(
                 children: [
-                  Expanded(child: Divider()),
+                  const Expanded(child: Divider()),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 2.w),
                     child: Text(
-                      "Medicine taken",
-                      style:
-                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+                      "medicine_taken".tr,
+                      style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600),
                     ),
                   ),
-                  Expanded(child: Divider()),
+                  const Expanded(child: Divider()),
                 ],
               ),
 
-              SizedBox(height: 2.h),
+              verticalSpace(2.h),
 
               /// MEDICINE LIST
               Expanded(
@@ -131,33 +121,32 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   padding: EdgeInsets.zero,
                   children: [
                     medicineTile(
-                      name: "Risek",
-                      dose: "20mg | 1 Capsule",
+                      name: "Risek".tr,
+                      dose: "dose_20mg_capsule".tr,
                       time: "09:30 AM",
                       asset: "assets/images/risek.png",
                     ),
                     verticalSpace(1.h),
-                    Divider(),
+                    const Divider(),
                     verticalSpace(1.h),
                     medicineTile(
-                      name: "Captopril",
-                      dose: "20mg | 1 Tablet",
+                      name: "Captopril".tr,
+                      dose: "dose_20mg_tablet".tr,
                       time: "09:30 AM",
                       asset: "assets/images/captopril.png",
                     ),
                     verticalSpace(1.h),
-                    Divider(),
+                    const Divider(),
                     verticalSpace(1.h),
                     medicineTile(
-                      name: "Risek",
-                      dose: "20mg | 1 Capsule",
+                      name: "Risek".tr,
+                      dose: "dose_20mg_capsule".tr,
                       time: "03:00 PM",
                       asset: "assets/images/risek.png",
                     ),
-
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -181,13 +170,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
           child: Container(
             height: 8.h,
             width: 26.w,
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             color: const Color(0xffF6F6F6),
             child: Image.asset(asset, fit: BoxFit.contain),
           ),
         ),
 
-        SizedBox(width: 4.w),
+        horizontalSpace(4.w),
 
         /// TEXT
         Column(
@@ -195,16 +184,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
           children: [
             Text(
               name,
-              style:
-              TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600),
+              style: AppTextStyles.semiBoldTextStyle.copyWith(
+                fontSize: 18.sp,
+                color: const Color(0xff353535),
+              ),
             ),
-            SizedBox(height: 0.5.h),
+            verticalSpace(0.5.h),
             Text(
               dose,
-              style: TextStyle(fontSize: 14.sp, color: Colors.black87),
+              style: AppTextStyles.smallTextStyle.copyWith(
+                fontSize: 16.sp,
+                color: const Color(0xff353535),
+              ),
             ),
             Text(
-              "Taken | $time",
+              "taken_at".trArgs([time]), // "Taken | 09:30 AM"
               style: TextStyle(
                 fontSize: 14.sp,
                 color: Colors.green,
@@ -212,7 +206,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }

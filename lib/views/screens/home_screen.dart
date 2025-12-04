@@ -28,11 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
-    // Initial time
     currentTime = _formatTime(DateTime.now());
-
-    // Update every second
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {
         currentTime = _formatTime(DateTime.now());
@@ -83,11 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ListTile(
                                 contentPadding: EdgeInsets.zero,
                                 title: GestureDetector(
-                                  onTap: (){
-                                    Get.to(()=>ProfileScreen());
-                                  },
+                                  onTap: () => Get.to(() => ProfileScreen()),
                                   child: Text(
-                                    "Hey Mohsin!",
+                                    "greeting".tr, // "Hey Mohsin!" → dynamic name ke liye controller use kar sakte ho
                                     style: AppTextStyles.boldTextStyle.copyWith(
                                       color: AppColors.textColor,
                                       fontSize: 20.sp,
@@ -95,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 subtitle: Text(
-                                  "Welcome !",
+                                  "welcome_message".tr,
                                   style: AppTextStyles.regularTextStyle.copyWith(
                                     color: AppColors.textColor,
                                     fontSize: 17.sp,
@@ -105,16 +99,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 trailing: Transform.scale(
                                   scale: 1.2,
                                   child: GestureDetector(
-                                    onTap: (){
-                                      Get.to(()=>NotificationScreen());
-                                    },
+                                    onTap: () => Get.to(() => NotificationScreen()),
                                     child: SizedBox(
                                       width: 16.w,
-                                      child: SvgPicture.asset(
-                                        "assets/icons/notification_icon.svg",
-                                      ),
+                                      child: SvgPicture.asset("assets/icons/notification_icon.svg"),
                                     ),
-                                  )
+                                  ),
                                 ),
                               ),
                             ),
@@ -124,6 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
 
+                  // Clock Circle
                   Positioned(
                     bottom: 0,
                     left: 0,
@@ -136,11 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: AppColors.white,
                         shape: BoxShape.circle,
                         boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.10),
-                            blurRadius: 5,
-                            offset: const Offset(0, 4),
-                          ),
+                          BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: 5, offset: const Offset(0, 4)),
                         ],
                       ),
                       child: Container(
@@ -149,36 +136,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: BoxDecoration(
                           color: AppColors.white,
                           shape: BoxShape.circle,
-                          border: Border.all(
-                            color: const Color(0xffF0F0F0),
-                            width: 18.px,
-                          ),
+                          border: Border.all(color: const Color(0xffF0F0F0), width: 18.px),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // REAL-TIME CLOCK
                             Text(
                               currentTime,
-                              style: AppTextStyles.boldTextStyle.copyWith(
-                                color: AppColors.textColor,
-                                fontSize: 25.sp,
-                              ),
-                            ),
-
-                            Text(
-                              "AM",
-                              style: AppTextStyles.boldTextStyle.copyWith(
-                                color: AppColors.textColor,
-                                fontSize: 18.sp,
-                              ),
+                              style: AppTextStyles.boldTextStyle.copyWith(color: AppColors.textColor, fontSize: 25.sp),
                             ),
                             Text(
-                              "No Tablet",
-                              style: AppTextStyles.boldTextStyle.copyWith(
-                                color: AppColors.primaryColor,
-                                fontSize: 18.sp,
-                              ),
+                              "am_pm".tr, // AM/PM Arabic mein
+                              style: AppTextStyles.boldTextStyle.copyWith(color: AppColors.textColor, fontSize: 18.sp),
+                            ),
+                            Text(
+                              "no_medicine_yet".tr,
+                              style: AppTextStyles.boldTextStyle.copyWith(color: AppColors.primaryColor, fontSize: 18.sp),
                             ),
                           ],
                         ),
@@ -191,22 +164,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
             verticalSpace(2.h),
 
-            // IMAGE
+            // No Medicine Image
             SizedBox(
               height: 20.h,
               child: Transform.scale(
                 scale: 1.2,
-                child: Image.asset(
-                  "assets/images/no_medicine.png",
-                  fit: BoxFit.fitHeight,
-                ),
+                child: Image.asset("assets/images/no_medicine.png", fit: BoxFit.fitHeight),
               ),
             ),
 
             verticalSpace(2.h),
 
             Text(
-              "No Medications Added",
+              "add_first_medicine".tr,
               style: AppTextStyles.boldTextStyle.copyWith(
                 color: AppColors.textColor,
                 fontSize: 20.sp,
@@ -214,11 +184,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            Text(
-              "If you haven't added a medication, please do so now.",
-              style: AppTextStyles.hintTextStyle.copyWith(
-                color: AppColors.borderGrey,
-                fontSize: 15.sp,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: Text(
+                "add_first_medicine_desc".tr,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.hintTextStyle.copyWith(color: AppColors.borderGrey, fontSize: 15.sp),
               ),
             ),
 
@@ -229,17 +200,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CustomButton(
                 height: 5.5.h,
                 iconPath: "assets/icons/plus.svg",
-                title: "Add Medication",
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.buttonText,
-                ),
-                onTap: () {
-                  Get.to(()=>AddMedicineScreen());
-                },
+                title: "add_medication".tr,
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700, color: AppColors.buttonText),
+                onTap: () => Get.to(() => AddMedicineScreen()),
               ),
-            )
+            ),
           ],
         ),
       ),

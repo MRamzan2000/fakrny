@@ -2,41 +2,33 @@ import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/views/reused_widgets/reused_able_appbar.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
 
+  // Demo notifications – ab Arabic mein bhi dikhega
   final List<Map<String, String>> notifications = const [
     {
-      "type": "Stock Ending",
-      "title": "Lorem ipsum dolor sit amet, consectetur elit.",
+      "type": "stock_ending",
+      "title": "stock_ending_message",
       "time": "10:23AM",
     },
     {
-      "type": "Heading",
-      "title": "Lorem ipsum dolor sit amet, consectetur elit.",
-      "time": "10:23AM",
+      "type": "reminder",
+      "title": "reminder_message",
+      "time": "09:15AM",
     },
     {
-      "type": "Heading",
-      "title": "Lorem ipsum dolor sit amet, consectetur elit.",
-      "time": "10:23AM",
+      "type": "reminder",
+      "title": "dose_reminder_message",
+      "time": "02:00PM",
     },
     {
-      "type": "Heading",
-      "title": "Lorem ipsum dolor sit amet, consectetur elit.",
-      "time": "10:23AM",
-    },
-    {
-      "type": "Heading",
-      "title": "Lorem ipsum dolor sit amet, consectetur elit.",
-      "time": "10:23AM",
-    },
-    {
-      "type": "Heading",
-      "title": "Lorem ipsum dolor sit amet, consectetur elit.",
-      "time": "10:23AM",
+      "type": "general",
+      "title": "general_notification",
+      "time": "Yesterday",
     },
   ];
 
@@ -49,59 +41,51 @@ class NotificationScreen extends StatelessWidget {
           width: MediaQuery.sizeOf(context).width,
           child: Column(
             children: [
-              appBar(title: "Notification"),
+              appBar(title: "notifications".tr),
               verticalSpace(2.h),
+
               Expanded(
                 child: ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 0),
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
                   itemCount: notifications.length,
-                  separatorBuilder: (_, __) =>
-                      Divider(height: 1.h, color: Colors.grey[300]),
+                  separatorBuilder: (_, __) => Divider(height: 1.h, color: Colors.grey[300]),
                   itemBuilder: (context, index) {
                     final noti = notifications[index];
-                    final isStockEnding = noti["type"] == "Stock Ending";
+                    final isStockEnding = noti["type"] == "stock_ending";
 
                     return ListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              if (isStockEnding)
-                                Text(
-                                  "Stock Ending",
-                                  style:TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 14.sp,
-                                  ),
-                                )
-                              else
-                                Text(
-                                  noti["type"] == "Stock Ending"
-                                      ? ""
-                                      : "Heading",
-                                  style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontSize: 14.sp,
-                                  ),
+                              // Type Label (Stock Ending = Red, Others = Green)
+                              Text(
+                                isStockEnding ? "stock_ending".tr : noti["type"]!.tr,
+                                style: TextStyle(
+                                  color: isStockEnding ? Colors.red : AppColors.primaryColor,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              if (isStockEnding) SizedBox(width: 3.w),
+                              ),
                               Text(
                                 noti["time"]!,
                                 style: TextStyle(
                                   color: AppColors.primaryColor,
-                                  fontSize: 14.sp,
+                                  fontSize: 15.sp,
                                 ),
                               ),
                             ],
                           ),
                           verticalSpace(.5.h),
                           Text(
-                            noti["title"]!,
+                            noti["title"]!.tr,
                             style: TextStyle(
                               fontSize: 16.sp,
                               color: Colors.black87,
+                              height: 1.4,
                             ),
                           ),
                         ],
@@ -110,7 +94,6 @@ class NotificationScreen extends StatelessWidget {
                   },
                 ),
               ),
-
             ],
           ),
         ),

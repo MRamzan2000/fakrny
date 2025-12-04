@@ -53,17 +53,15 @@ class _ScanMedicineState extends State<ScanMedicine> {
       body: SafeArea(
         child: Column(
           children: [
-            // Top Bar
-           appBar(title: "Scanning"),
+            appBar(title: "scanning_title".tr),
 
             verticalSpace(2.h),
-
-             Text(
-              "Doctor Prescription",
-              style:AppTextStyles.semiBoldTextStyle.copyWith(
+            Text(
+              "doctor_prescription".tr,
+              style: AppTextStyles.semiBoldTextStyle.copyWith(
                 color: AppColors.textColor,
-
-              )
+                fontSize: 18.sp,
+              ),
             ),
 
             verticalSpace(2.h),
@@ -74,10 +72,7 @@ class _ScanMedicineState extends State<ScanMedicine> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.85,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.green,
-                      width: 3,
-                    ),
+                    border: Border.all(color: Colors.green, width: 3),
                     borderRadius: BorderRadius.circular(12.px),
                   ),
                   child: ClipRRect(
@@ -85,9 +80,7 @@ class _ScanMedicineState extends State<ScanMedicine> {
                     child: isCameraReady
                         ? CameraPreview(controller!)
                         : const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.green,
-                      ),
+                      child: CircularProgressIndicator(color: Colors.green),
                     ),
                   ),
                 ),
@@ -95,25 +88,22 @@ class _ScanMedicineState extends State<ScanMedicine> {
             ),
 
             verticalSpace(2.h),
-
-            // Capture Button
             Padding(
-              padding:  EdgeInsets.only(bottom: 2.h),
+              padding: EdgeInsets.only(bottom: 2.h),
               child: GestureDetector(
                 onTap: () async {
-                  Get.to(()=>DoctorPrescriptionScreen());
+                  Get.to(() => DoctorPrescriptionScreen());
                   if (!controller!.value.isInitialized) return;
-
-                  final picture = await controller!.takePicture();
+                  await controller!.takePicture();
                 },
                 child: Container(
                   height: 70,
                   width: 70,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.greenAccent,
                     shape: BoxShape.circle,
                   ),
-                  child:  Icon(
+                  child: Icon(
                     Icons.camera_alt,
                     size: 3.5.h,
                     color: Colors.white,

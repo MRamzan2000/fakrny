@@ -7,23 +7,69 @@ import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
 import 'package:fakrny/views/reused_widgets/text_filed.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:fakrny/views/screens/auth_screens/login_screen.dart';
-import 'package:fakrny/views/screens/auth_screens/verify_email_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:get/get.dart';
 
-class SignupScreen extends StatelessWidget {
-  SignupScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   final AuthController controller = Get.put(AuthController());
-  final Rx<DateTime?> dob = Rx<DateTime?>(null);
+
+  // Controllers
+  late TextEditingController nameCtrl;
+  late TextEditingController emailCtrl;
+  late TextEditingController passCtrl;
+  late TextEditingController confirmPassCtrl;
+
+  // Rx variables
+  late Rx<GenderModel?> selectedGender;
+  late Rx<DateTime?> dob;
+  late RxBool obscure;
+
+  @override
+  void initState() {
+    super.initState();
+    nameCtrl = TextEditingController();
+    emailCtrl = TextEditingController();
+    passCtrl = TextEditingController();
+    confirmPassCtrl = TextEditingController();
+
+    selectedGender = Rx<GenderModel?>(null);
+    dob = Rx<DateTime?>(null);
+    obscure = true.obs;
+  }
+  // Gender list
+  List<GenderModel> genderList = [
+    GenderModel(name: "Male"),
+    GenderModel(name: "Female"),
+    GenderModel(name: "Custom"),
+  ];
+  @override
+  void dispose() {
+    nameCtrl.dispose();
+    emailCtrl.dispose();
+    passCtrl.dispose();
+    confirmPassCtrl.dispose();
+    super.dispose();
+  }
+
+  void toggleObscure() => obscure.value = !obscure.value;
 
   @override
   Widget build(BuildContext context) {
+    final isArabic = Get.locale?.languageCode == "ar";
+
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/blur_bg.png"),
             fit: BoxFit.fitWidth,
@@ -52,36 +98,39 @@ class SignupScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("Sign Up", style: AppTextStyles.greenBoldTextStyle),
-                      verticalSpace(0.4.h),
-
                       Text(
-                        "Sign up with Email",
+                        "sign_up_title".tr,
+                        style: AppTextStyles.greenBoldTextStyle,
+                      ),
+                      verticalSpace(0.4.h),
+                      Text(
+                        "sign_up_with_email".tr,
                         style: AppTextStyles.smallTextStyle,
                       ),
                       verticalSpace(2.h),
+
+                      // Name Field
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("Name", style: AppTextStyles.smallTextStyle),
+                          Text("name".tr, style: AppTextStyles.smallTextStyle),
                         ],
                       ),
                       verticalSpace(.4.h),
-
-                      /// Email Field
                       customTextField(
-                        hintText: "My Name",
-                        controller: controller.emailCtrl,
+                        hintText: "hint_name".tr,
+                        controller: nameCtrl,
                         iconPath: "assets/icons/name.svg",
                       ),
                       verticalSpace(1.h),
 
+                      // DOB and Gender
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Expanded(
                             child: Column(
@@ -90,143 +139,145 @@ class SignupScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Date of Birth",
+                                      "date_of_birth".tr,
                                       style: AppTextStyles.smallTextStyle,
                                     ),
                                   ],
                                 ),
                                 verticalSpace(.4.h),
-
                                 dobPicker(
                                   selectedDate: dob,
-                                  hintText: "01-Jan-1990",
+                                  hintText: "dob_hint".tr,
                                   prefixSvgPath: "assets/icons/dob.svg",
                                 ),
                               ],
                             ),
                           ),
                           horizontalSpace(3.w),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Gender",
-                                      style: AppTextStyles.smallTextStyle,
-                                    ),
-                                  ],
-                                ),
-                                verticalSpace(.4.h),
-
-                                customDropdownField<GenderModel>(
-                                  hint: "Male",
-                                  items: controller.genderList,
-                                  selectedValue: controller.selectedGender,
-                                  label: (gender) => gender.name,
-                                  prefixPath: "assets/icons/gender.svg",
-                                ),
-                              ],
+                          Obx(
+                                () => Expanded(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "gender".tr,
+                                        style: AppTextStyles.smallTextStyle,
+                                      ),
+                                    ],
+                                  ),
+                                  verticalSpace(.4.h),
+                                  customDropdownField<GenderModel>(
+                                    hint: "gender_male".tr,
+                                    items: genderList,
+                                    selectedValue: selectedGender,
+                                    label: (gender) => gender.name,
+                                    prefixPath: "assets/icons/gender.svg",
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
                       verticalSpace(1.h),
+
+                      // Email Field
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("Email", style: AppTextStyles.smallTextStyle),
+                          Text("email".tr, style: AppTextStyles.smallTextStyle),
                         ],
                       ),
                       verticalSpace(.4.h),
-
-                      /// Email Field
                       customTextField(
-                        hintText: "My Email",
-                        controller: controller.emailCtrl,
+                        hintText: "hint_email".tr,
+                        controller: emailCtrl,
                         iconPath: "assets/icons/email.svg",
                       ),
-
                       verticalSpace(1.h),
 
+                      // Password Field
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("Password", style: AppTextStyles.smallTextStyle),
+                          Text("password".tr, style: AppTextStyles.smallTextStyle),
                         ],
                       ),
                       verticalSpace(.4.h),
-
-                      /// PASSWORD FIELD (Reactive)
                       Obx(
-                        () => customTextField(
-                          hintText: "My Password",
-                          controller: controller.passCtrl,
+                            () => customTextField(
+                          hintText: "hint_password".tr,
+                          controller: passCtrl,
                           iconPath: "assets/icons/password.svg",
                           isPassword: true,
-                          obscureText: controller.obscure.value,
-                          suffixIcon: controller.obscure.value
+                          obscureText: obscure.value,
+                          suffixIcon: obscure.value
                               ? SvgPicture.asset("assets/icons/eye_off.svg")
                               : SvgPicture.asset("assets/icons/eye_on.svg"),
-                          onSuffixTap: controller.toggleObscure,
+                          onSuffixTap: toggleObscure,
                         ),
                       ),
                       verticalSpace(1.h),
 
+                      // Confirm Password Field
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            "Confirm Password",
-                            style: AppTextStyles.smallTextStyle,
-                          ),
+                          Text("confirm_password".tr, style: AppTextStyles.smallTextStyle),
                         ],
                       ),
                       verticalSpace(.4.h),
-
-                      /// PASSWORD FIELD (Reactive)
                       Obx(
-                        () => customTextField(
-                          hintText: "Re Enter Your Password",
-                          controller: controller.passCtrl,
+                            () => customTextField(
+                          hintText: "hint_confirm_password".tr,
+                          controller: confirmPassCtrl,
                           iconPath: "assets/icons/password.svg",
                           isPassword: true,
-                          obscureText: controller.obscure.value,
-                          suffixIcon: controller.obscure.value
+                          obscureText: obscure.value,
+                          suffixIcon: obscure.value
                               ? SvgPicture.asset("assets/icons/eye_off.svg")
                               : SvgPicture.asset("assets/icons/eye_on.svg"),
-                          onSuffixTap: controller.toggleObscure,
+                          onSuffixTap: toggleObscure,
                         ),
                       ),
-
                       verticalSpace(3.h),
 
-                      /// LOGIN BUTTON
+                      // Sign Up Button
                       CustomButton(
                         height: 5.5.h,
-                        title: "Sign Up",
+                        title: "sign_up_button".tr,
+                        border: Border.all(color: Colors.transparent),
                         onTap: () {
-                          Get.to(() => VerifyEmailScreen());
+                          controller.signUpUser(
+                            name: nameCtrl.text,
+                            email: emailCtrl.text,
+                            password: passCtrl.text,
+                            confirmPassword: confirmPassCtrl.text,
+                            gender: selectedGender.value,
+                            dob: dob,
+                          );
                         },
                       ),
-
                       verticalSpace(2.h),
+
+                      // Navigate to Login
                       GestureDetector(
                         onTap: () {
-                          Get.to((LoginScreen()));
+                          Get.to(() => LoginScreen());
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "I already have an account? ",
+                              "already_have_account".tr,
                               style: AppTextStyles.smallTextStyle.copyWith(
                                 color: AppColors.borderGrey,
                               ),
                             ),
                             Text(
-                              "Sign In",
+                              "sign_in".tr,
                               style: AppTextStyles.greenBoldTextStyle.copyWith(
                                 fontSize: 16.5.sp,
                               ),

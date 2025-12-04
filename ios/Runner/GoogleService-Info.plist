@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBjtAgCsrbCqG02tHe9upMM2BK5N_748_g</string>
+	<string>AIzaSyCqvHxHdt8yVuWwP5jXPkJkXaiMFr1-6cI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>206987515302</string>
+	<string>1009934192640</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.fakrny.ios</string>
 	<key>PROJECT_ID</key>
-	<string>fakrny-app-57294</string>
+	<string>fakrny-8537b</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fakrny-app-57294.firebasestorage.app</string>
+	<string>fakrny-8537b.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:206987515302:ios:d0c787504291a648ef2b67</string>
+	<string>1:1009934192640:ios:c0d875ceed6098139548e5</string>
 </dict>
 </plist>

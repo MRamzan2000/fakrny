@@ -8,6 +8,7 @@ import 'package:fakrny/views/screens/statistics_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
 
@@ -17,36 +18,37 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   final RxInt _selectedIndex = 0.obs;
-   var screens=[
-     HomeScreen(),
-     MyMedsScreen(),
-     StatisticsScreen(),
-     HistoryScreen()
-   ].obs;
+
+  final screens = [
+    const HomeScreen(),
+    const MyMedsScreen(),
+    const StatisticsScreen(),
+    const HistoryScreen(),
+  ].obs;
+
   @override
   Widget build(BuildContext context) {
     final Color activeColor = AppColors.black;
     final Color inactiveColor = AppColors.white;
 
     return Obx(
-      ()=> Scaffold(
+          () => Scaffold(
         backgroundColor: AppColors.primaryColor,
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: AppColors.white,
           color: AppColors.primaryColor,
           index: _selectedIndex.value,
-          onTap: (index) {
-              _selectedIndex.value = index;
-          },
+          onTap: (index) => _selectedIndex.value = index,
           items: [
             CurvedNavigationBarItem(
               child: SvgPicture.asset(
                 "assets/icons/home.svg",
                 color: _selectedIndex.value == 0 ? activeColor : inactiveColor,
               ),
-              label: 'Home',
+              label: 'home'.tr,
               labelStyle: TextStyle(
                 color: _selectedIndex.value == 0 ? activeColor : inactiveColor,
+                fontWeight: FontWeight.w500,
               ),
             ),
             CurvedNavigationBarItem(
@@ -54,9 +56,10 @@ class _BottomBarState extends State<BottomBar> {
                 "assets/icons/meds.svg",
                 color: _selectedIndex.value == 1 ? activeColor : inactiveColor,
               ),
-              label: 'My Meds',
+              label: 'my_meds'.tr,
               labelStyle: TextStyle(
                 color: _selectedIndex.value == 1 ? activeColor : inactiveColor,
+                fontWeight: FontWeight.w500,
               ),
             ),
             CurvedNavigationBarItem(
@@ -64,9 +67,10 @@ class _BottomBarState extends State<BottomBar> {
                 "assets/icons/statistics.svg",
                 color: _selectedIndex.value == 2 ? activeColor : inactiveColor,
               ),
-              label: 'Statistics',
+              label: 'statistics'.tr,
               labelStyle: TextStyle(
                 color: _selectedIndex.value == 2 ? activeColor : inactiveColor,
+                fontWeight: FontWeight.w500,
               ),
             ),
             CurvedNavigationBarItem(
@@ -74,14 +78,15 @@ class _BottomBarState extends State<BottomBar> {
                 "assets/icons/history.svg",
                 color: _selectedIndex.value == 3 ? activeColor : inactiveColor,
               ),
-              label: 'History',
+              label: 'history'.tr,
               labelStyle: TextStyle(
                 color: _selectedIndex.value == 3 ? activeColor : inactiveColor,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-        body: screens[ _selectedIndex.value],
+        body: screens[_selectedIndex.value],
       ),
     );
   }

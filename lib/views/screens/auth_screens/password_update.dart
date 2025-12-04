@@ -6,7 +6,7 @@ import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart'; // ← .tr ke liye zaroori
 
 class PasswordUpdate extends StatelessWidget {
   PasswordUpdate({super.key});
@@ -19,7 +19,7 @@ class PasswordUpdate extends StatelessWidget {
       backgroundColor: AppColors.primaryColor,
 
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/blur_bg.png"),
             fit: BoxFit.fitWidth,
@@ -29,6 +29,7 @@ class PasswordUpdate extends StatelessWidget {
         width: MediaQuery.sizeOf(context).width,
         child: Stack(
           children: [
+            // Top logo + app name (reuse from splash)
             Positioned(
               top: 20.h,
               left: 0,
@@ -47,13 +48,13 @@ class PasswordUpdate extends StatelessWidget {
                   ),
                   verticalSpace(1.5.h),
                   Text(
-                    "Fakrny",
+                    "app_name".tr,
                     style: AppTextStyles.boldTextStyle.copyWith(
                       color: Colors.white.withOpacity(0.4),
                     ),
                   ),
                   Text(
-                    "Your Smart Partner for Timely\n Medication",
+                    "splash_subtitle".tr,
                     style: AppTextStyles.semiBoldTextStyle.copyWith(
                       color: Colors.white.withOpacity(0.4),
                     ),
@@ -63,6 +64,7 @@ class PasswordUpdate extends StatelessWidget {
               ),
             ),
 
+            // Main white card
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -87,24 +89,30 @@ class PasswordUpdate extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      // Title
                       Text(
-                        "Password Has Been Created",
+                        "password_created_title".tr,
                         style: AppTextStyles.boldTextStyle.copyWith(
                           color: AppColors.black,
+                          fontSize: 20.sp,
                         ),
                       ),
                       verticalSpace(0.4.h),
+
+                      // Description
                       Text(
-                        "To log in to your account, click the Sign in button\n and enter your email along with your new\n password.",
-                        style: AppTextStyles.smallTextStyle,
+                        "password_created_desc".tr,
+                        style: AppTextStyles.smallTextStyle.copyWith(fontSize: 16.sp),
                         textAlign: TextAlign.center,
                       ),
                       verticalSpace(4.h),
+
+                      // Sign In Button
                       CustomButton(
                         height: 5.5.h,
-                        title: "Sign In",
+                        title: "sign_in".tr,
                         onTap: () {
-                          Get.close(4);
+                          Get.close(4); // ya Get.offAll(() => LoginScreen());
                         },
                       ),
                       verticalSpace(2.h),
@@ -113,6 +121,8 @@ class PasswordUpdate extends StatelessWidget {
                 ),
               ),
             ),
+
+            // Bottom illustration
             Positioned(
               bottom: 27.h,
               left: 0,

@@ -9,6 +9,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import 'controllers/auth_controller.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -24,6 +26,7 @@ void main() async {
     projectId: 'fakrny-8537b',
   );
   await Firebase.initializeApp(options: firebaseOptions);
+  Get.put(AuthController());
   await SharedPrefHelper.init();
 
   runApp(const MyApp());

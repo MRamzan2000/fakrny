@@ -1,5 +1,7 @@
 import 'package:fakrny/controllers/auth_controller.dart';
 import 'package:fakrny/utils/app_colors.dart';
+import 'package:fakrny/utils/app_loadings.dart';
+import 'package:fakrny/utils/app_message.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
 import 'package:fakrny/views/reused_widgets/elevated_button.dart';
 import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
@@ -7,6 +9,8 @@ import 'package:fakrny/views/reused_widgets/text_filed.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:fakrny/views/screens/auth_screens/forget_password_screen.dart';
 import 'package:fakrny/views/screens/auth_screens/signup_screen.dart';
+import 'package:fakrny/views/screens/bottom_navigation_bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -193,19 +197,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       verticalSpace(2.h),
-
-                      // Google Sign In
                       CustomButton(
                         height: 5.4.h,
                         iconPath: "assets/icons/google.svg",
                         horizontal: 2.w,
                         title: "sign_in_with_google".tr,
-                        onTap: () {},
+                        onTap: () async {
+                        controller.signInWithGoogle();
+                        },
                         isGradient: false,
                         color: const Color(0xffF4F8FB),
-                        border: Border.all(color: const Color(0xff1FB774), width: 2),
+                        border: Border.all(color: AppColors.primaryColor, width: 2),
                         textColor: AppColors.primaryColor,
                       ),
+
                       verticalSpace(2.h),
 
                       // Sign Up

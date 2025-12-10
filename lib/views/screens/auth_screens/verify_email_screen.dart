@@ -11,25 +11,59 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:get/get.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
-  const VerifyEmailScreen({super.key});
+  final String name;
+  final String uid;
+  final String email;
+  final dynamic gender;
+  final Rx<DateTime?> dob;
+
+  const VerifyEmailScreen({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.gender,
+    required this.dob,
+    required this.uid,
+  });
 
   @override
   State<VerifyEmailScreen> createState() => _VerifyEmailScreenState();
 }
 
 class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
-  final AuthController controller = Get.put(AuthController());
-  Timer? _timer;
+  final AuthController controller = Get.find<AuthController>();
 
   @override
   void initState() {
     super.initState();
-    controller.startEmailVerificationListener();
+
+    /// Start email listener (safe)
+    controller.startEmailVerificationListener(
+      name: widget.name,
+      email: widget.email,
+      gender: widget.gender ?? "Unknown",
+      dob: widget.dob,
+    );
+
+    /// Listen inside screen → navigation safe
+    ever(controller.isEmailVerified, (verified) {
+      if (verified == true) {
+        Future.microtask(() {
+          controller.saveUserToFirestore(
+            name: widget.name,
+            email: widget.email,
+            gender: widget.gender ?? "Unknown",
+            dob: widget.dob.value.toString(), uid: widget.uid,
+          );
+
+          Get.offAll(() => LoginScreen());
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
     super.dispose();
   }
 
@@ -39,7 +73,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
       backgroundColor: AppColors.primaryColor,
       body: Stack(
         children: [
-          // Background + logo
+          // Background
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -47,9 +81,11 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                 fit: BoxFit.fitWidth,
               ),
             ),
-            height: MediaQuery.sizeOf(context).height,
-            width: MediaQuery.sizeOf(context).width,
+            width: double.infinity,
+            height: double.infinity,
           ),
+
+          // Logo
           Positioned(
             top: 22.h,
             left: 0,
@@ -82,11 +118,10 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
             ),
           ),
 
-          // Main card
+          // Bottom Card
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              width: double.infinity,
               padding: EdgeInsets.fromLTRB(6.w, 8.h, 6.w, 3.h),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -105,11 +140,16 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Icon
                   SizedBox(
                     height: 5.h,
-                    child: Transform.scale(scale: 2.5,child: Image.asset("assets/images/forgot_password.png"),),
+                    child: Transform.scale(
+                      scale: 2.5,
+                      child: Image.asset("assets/images/forgot_password.png"),
+                    ),
                   ),
                   verticalSpace(4.h),
+
                   Text(
                     "verify_email_title".tr,
                     style: AppTextStyles.boldTextStyle.copyWith(
@@ -118,6 +158,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                     ),
                   ),
                   verticalSpace(1.h),
+
                   Text(
                     "verify_email_desc".tr,
                     style: AppTextStyles.smallTextStyle.copyWith(fontSize: 16.sp),
@@ -125,16 +166,17 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                   ),
                   verticalSpace(4.h),
 
-                  // Resend email button
+                  // SEND AGAIN
                   CustomButton(
                     height: 5.5.h,
                     title: "Resend_email".tr,
                     onTap: () async {
+                      controller.resendVerificationEmail();
                     },
                   ),
+
                   verticalSpace(2.h),
 
-                  // Open login screen manually
                   GestureDetector(
                     onTap: () => Get.offAll(() => LoginScreen()),
                     child: Text(
@@ -142,32 +184,29 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                       style: AppTextStyles.greenBoldTextStyle.copyWith(fontSize: 16.sp),
                     ),
                   ),
-
                   verticalSpace(2.h),
 
+                  // LOADING Indicator
                   Obx(() {
-                    if (!controller.isEmailVerified.value) {
-                      return Column(
-                        children: [
-                          LinearProgressIndicator(
-                            color: AppColors.primaryColor,
-                            backgroundColor: AppColors.primaryColor.withOpacity(0.3),
+                    return !controller.isEmailVerified.value
+                        ? Column(
+                      children: [
+                        LinearProgressIndicator(
+                          color: AppColors.primaryColor,
+                          backgroundColor: AppColors.primaryColor.withOpacity(0.3),
+                        ),
+                        verticalSpace(1.h),
+                        Text(
+                          "Waiting for email verification...",
+                          style: AppTextStyles.smallTextStyle.copyWith(
+                            fontSize: 14.sp,
+                            color: Colors.grey,
                           ),
-                          verticalSpace(1.h),
-                          Text(
-                            "Waiting for email verification...",
-                            style: AppTextStyles.smallTextStyle.copyWith(
-                              fontSize: 14.sp,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
+                        ),
+                      ],
+                    )
+                        : const SizedBox.shrink();
                   }),
-
                 ],
               ),
             ),

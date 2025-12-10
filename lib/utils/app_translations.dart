@@ -9,7 +9,17 @@ Map<String, String> enUS = {
   "app_name": "Fakrny",
   "splash_subtitle": "Your Smart Partner for Timely Medication",
   "skip": "Skip",
-  // Onboarding
+  "dosage_3_times_day": "3 times per day",
+  "capsule_1": "1 Capsule",
+  "empty_stomach": "Empty Stomach",
+  "1_dose_time": "1 Dose Time",
+  "2_dose_time": "2 Dose Time",
+  "3_dose_time": "3 Dose Time",
+  "4_dose_time": "4 Dose Time",
+  "5_dose_time": "5 Dose Time",
+  "6_dose_time": "6 Dose Time",
+  "custom_tts_alert": "Custom Text to Speech Alert",
+  "scanning_title": "Scanning",
   "onboard1_title": "Smart",
   "onboard1_subtitle": "Never Miss a Dose Again",
   "onboard1_desc":
@@ -163,6 +173,11 @@ Map<String, String> enUS = {
   "I-DROP MGD": "I-DROP MGD",
   "Sudafed Blocked Nose": "Sudafed Blocked Nose",
   "20mg": "20mg",
+  "medicine_instructions": "Dosage Frequency & Time",
+  "take_with_milk": "Take with milk",
+  "voice_sound_alert": "Voice & Sound Alert",
+  "voice_alert": "Voice Alert",
+  "voice_alert_message": "It’s time to take your white pill after your meal."
 };
 
 Map<String, String> arSA = {
@@ -310,4 +325,20 @@ Map<String, String> arSA = {
   "Language": "اللغة",
   "Change_password": "تغيير كلمة المرور",
   "Delete_account": "حذف الحساب",
+  "dosage_3_times_day": "3 مرات في اليوم",
+  "capsule_1": "كبسولة واحدة",
+  "empty_stomach": "على معدة فارغة",
+  "1_dose_time": "وقت الجرعة 1",
+  "2_dose_time": "وقت الجرعة 2",
+  "3_dose_time": "وقت الجرعة 3",
+  "4_dose_time": "وقت الجرعة 4",
+  "5_dose_time": "وقت الجرعة 5",
+  "6_dose_time": "وقت الجرعة 6",
+  "custom_tts_alert": "تنبيه مخصص للنص إلى كلام",
+  "scanning_title": "جارِ الفحص",
+  "medicine_instructions": "تكرار الجرعة ووقتها",
+  "take_with_milk": "يؤخذ مع الحليب",
+  "voice_sound_alert": "تنبيه الصوت والمؤثرات الصوتية",
+  "voice_alert": "تنبيه صوتي",
+  "voice_alert_message": "حان وقت تناول الحبة البيضاء بعد وجبتك."
 };

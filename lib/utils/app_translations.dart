@@ -67,7 +67,7 @@ Map<String, String> enUS = {
       "A reset code has been sent to email,\ncheck your email to continue the password reset\nprocess.",
   "verify_email_title": "Verify your email",
   "verify_email_desc":
-      "A verification code has been sent to\nandroid@gmail.com, check your email to\nactivate your account.",
+      "A verification code has been sent to\nEmail, check your email to\nactivate your account.",
   "submit": "Back To Login",
   // Password Flow
   "password_created_title": "Password Has Been Created",

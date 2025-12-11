@@ -20,7 +20,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final AuthController controller = Get.put(AuthController());
+  final AuthController controller = Get.find<AuthController>();
 
   // Controllers
   late TextEditingController nameCtrl;
@@ -255,7 +255,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             email: emailCtrl.text,
                             password: passCtrl.text,
                             confirmPassword: confirmPassCtrl.text,
-                            gender: selectedGender.value,
+                            gender: selectedGender.value?.name??"",
                             dob: dob,
                           );
                         },

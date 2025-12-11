@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'controllers/auth_controller.dart';
+import 'controllers/user_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +28,7 @@ void main() async {
   );
   await Firebase.initializeApp(options: firebaseOptions);
   Get.put(AuthController());
+  Get.put(UserController());
   await SharedPrefHelper.init();
 
   runApp(const MyApp());

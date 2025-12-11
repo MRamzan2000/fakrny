@@ -1,7 +1,5 @@
 import 'package:fakrny/controllers/auth_controller.dart';
 import 'package:fakrny/utils/app_colors.dart';
-import 'package:fakrny/utils/app_loadings.dart';
-import 'package:fakrny/utils/app_message.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
 import 'package:fakrny/views/reused_widgets/elevated_button.dart';
 import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
@@ -9,8 +7,6 @@ import 'package:fakrny/views/reused_widgets/text_filed.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:fakrny/views/screens/auth_screens/forget_password_screen.dart';
 import 'package:fakrny/views/screens/auth_screens/signup_screen.dart';
-import 'package:fakrny/views/screens/bottom_navigation_bar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -24,7 +20,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final AuthController controller = Get.put(AuthController());
+  final AuthController controller = Get.find<AuthController>();
   final TextEditingController emailCtrl = TextEditingController();
   final TextEditingController passwordCtrl = TextEditingController();
   RxBool remember = false.obs;

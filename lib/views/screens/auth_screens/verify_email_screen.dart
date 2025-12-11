@@ -14,7 +14,7 @@ class VerifyEmailScreen extends StatefulWidget {
   final String name;
   final String uid;
   final String email;
-  final dynamic gender;
+  final String gender;
   final Rx<DateTime?> dob;
 
   const VerifyEmailScreen({
@@ -41,7 +41,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     controller.startEmailVerificationListener(
       name: widget.name,
       email: widget.email,
-      gender: widget.gender ?? "Unknown",
+      gender: widget.gender,
       dob: widget.dob,
     );
 
@@ -52,7 +52,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
           controller.saveUserToFirestore(
             name: widget.name,
             email: widget.email,
-            gender: widget.gender ?? "Unknown",
+            gender: widget.gender,
             dob: widget.dob.value.toString(), uid: widget.uid,
           );
 
@@ -177,14 +177,14 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
 
                   verticalSpace(2.h),
 
-                  GestureDetector(
-                    onTap: () => Get.offAll(() => LoginScreen()),
-                    child: Text(
-                      "Back_to_login".tr,
-                      style: AppTextStyles.greenBoldTextStyle.copyWith(fontSize: 16.sp),
-                    ),
-                  ),
-                  verticalSpace(2.h),
+                  // GestureDetector(
+                  //   onTap: () => Get.offAll(() => LoginScreen()),
+                  //   child: Text(
+                  //     "Back_to_login".tr,
+                  //     style: AppTextStyles.greenBoldTextStyle.copyWith(fontSize: 16.sp),
+                  //   ),
+                  // ),
+                  // verticalSpace(2.h),
 
                   // LOADING Indicator
                   Obx(() {

@@ -171,9 +171,10 @@ Widget customDropdownField<T>({
         isExpanded: true,
         customButton: Text(
           selectedValue.value == null ? hint : label(selectedValue.value as T),
-          style: TextStyle(
-            fontSize: 16.sp,
-            color: selectedValue.value == null ? Colors.grey : Colors.black,
+          style:AppTextStyles.hintTextStyle.copyWith(
+              color: selectedValue.value == null ? Colors.grey : Colors.black,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w700
           ),
           overflow: TextOverflow.ellipsis,
         ),
@@ -232,10 +233,11 @@ Widget dobPicker({
       selectedDate.value == null
           ? hintText
           : DateFormat('dd-MMM-yyyy').format(selectedDate.value!),
-      style: TextStyle(
-        fontSize: 16.sp,
+      style:AppTextStyles.hintTextStyle.copyWith(
         color: selectedDate.value == null ? Colors.grey : Colors.black,
-      ),
+         fontSize: 16.sp,
+        fontWeight: FontWeight.w700
+      )
     )),
   );
 }

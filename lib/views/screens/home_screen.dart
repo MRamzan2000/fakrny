@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fakrny/controllers/user_controller.dart';
 import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/utils/app_text_styles.dart';
 import 'package:fakrny/utils/second_curved.dart';
@@ -24,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late Timer _timer;
   String currentTime = "";
+  final UserController controller = Get.find<UserController>();
 
   @override
   void initState() {
@@ -81,7 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 title: GestureDetector(
                                   onTap: () => Get.to(() => ProfileScreen()),
                                   child: Text(
-                                    "greeting".tr, // "Hey Mohsin!" → dynamic name ke liye controller use kar sakte ho
+                                    controller.userModel.value?.userName??"",
+                                    // "greeting".tr,
                                     style: AppTextStyles.boldTextStyle.copyWith(
                                       color: AppColors.textColor,
                                       fontSize: 20.sp,

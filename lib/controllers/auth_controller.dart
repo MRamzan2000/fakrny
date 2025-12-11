@@ -20,17 +20,19 @@ class AuthController extends GetxController {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // SAVE USER DATA TO FIRESTORE
+  // Save User Data
   Future<void> saveUserToFirestore({
     required String uid,
     required String name,
     required String email,
     required String gender,
     required String dob,
-  }) async {
+  })
+  async {
     await FirebaseFirestore.instance.collection("users").doc(uid).set({
       "userId": uid,
       "userName": name,
+      "profile": "",
       "email": email,
       "gender": gender,
       "dateOfBirth": dob,
@@ -38,15 +40,16 @@ class AuthController extends GetxController {
     });
   }
 
-  // SIGN UP
+  // Sign Up
   Future<void> signUpUser({
     required String name,
     required String email,
     required String password,
     required String confirmPassword,
-    required dynamic gender,
+    required String gender,
     required Rx<DateTime?> dob,
-  }) async {
+  })
+  async {
     final errors = [
       AppValidator.validateName(name),
       AppValidator.validateEmail(email),
@@ -55,25 +58,19 @@ class AuthController extends GetxController {
       AppValidator.validateGender(gender),
       AppValidator.validateDob(dob.value),
     ];
-
     for (var e in errors) {
       if (e != null) return AppMessage.error(e);
     }
-
     try {
       AppLoader.show(message: "Creating your account...");
-
       final userCred = await _auth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
-
       await userCred.user!.sendEmailVerification();
-
       AppMessage.success("Verification email sent!");
-
-      // Move to VerifyEmailScreen
-      Get.off(() => VerifyEmailScreen(
+      AppLoader.hide();
+      Get.to(() => VerifyEmailScreen(
         name: name,
         email: email,
         dob: dob,
@@ -92,69 +89,62 @@ class AuthController extends GetxController {
     }
   }
 
-  // VERIFICATION LISTENER (FIXED)
+  // Verification Listener
   void startEmailVerificationListener({
     required String name,
     required String email,
-    required dynamic gender,
+    required String gender,
     required Rx<DateTime?> dob,
-  }) {
+  })
+  {
     emailCheckTimer?.cancel();
-
-    emailCheckTimer = Timer.periodic(const Duration(seconds: 3), (timer) async {
-      final user = FirebaseAuth.instance.currentUser;
-      await user?.reload();
-
-      if (user != null && user.emailVerified) {
-        isEmailVerified.value = true; // UI will handle navigation
-        timer.cancel();
-
-        // Save user data in Firestore
-        await saveUserToFirestore(
-          uid: user.uid,
-          name: name,
-          email: email,
-          gender: gender.toString(),
-          dob: dob.value.toString(),
-        );
-      }
+    _checkEmailVerification();
+    emailCheckTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      _checkEmailVerification();
     });
   }
 
-  // LOGIN
+  Future<void> _checkEmailVerification()
+  async {
+    final user = FirebaseAuth.instance.currentUser;
+    await user?.reload();
+
+    if (user != null && user.emailVerified) {
+      isEmailVerified.value = true;
+      emailCheckTimer?.cancel();
+    }
+  }
+
+  // Login With Email
   Future<void> loginWithEmail({
     required String email,
     required String password,
     required bool rememberMe,
-  }) async {
+  })
+  async {
     final emailErr = AppValidator.validateEmail(email);
     if (emailErr != null) return AppMessage.error(emailErr);
-
     final passErr = AppValidator.validatePassword(password);
     if (passErr != null) return AppMessage.error(passErr);
-
     try {
       AppLoader.show(message: "Logging in...");
-
       final userCred = await _auth.signInWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
-
       final user = userCred.user;
       if (user == null) return AppMessage.error("Login failed.");
-
       if (!user.emailVerified) {
         return AppMessage.error("Please verify your email first.");
       }
-
       if (rememberMe) {
         SharedPrefHelper.setLogin(true);
         SharedPrefHelper.saveUser(uid: user.uid, email: user.email ?? "");
       }
-
       AppMessage.success("Welcome back!");
-      Get.offAll(() => BottomBar());
+      Future.delayed(Duration(milliseconds: 100), () {
+        Get.offAll(() => BottomBar());
+      });
     } on FirebaseAuthException catch (e) {
       String msg;
       switch (e.code) {
@@ -176,8 +166,9 @@ class AuthController extends GetxController {
     }
   }
 
-  // GOOGLE LOGIN
-  Future<void> signInWithGoogle() async {
+  // Google Login
+  Future<void> signInWithGoogle()
+  async {
     try {
       AppLoader.show(message: "Login With Google...");
 
@@ -212,11 +203,11 @@ class AuthController extends GetxController {
     }
   }
 
-  // RESEND VERIFICATION EMAIL
-  Future<void> resendVerificationEmail() async {
+  // Resend Verification
+  Future<void> resendVerificationEmail()
+  async {
     try {
       final user = _auth.currentUser;
-
       if (user != null && !user.emailVerified) {
         AppLoader.show(message: "Resending email...");
         await user.sendEmailVerification();
@@ -233,17 +224,15 @@ class AuthController extends GetxController {
     }
   }
 
-  // FORGOT PASSWORD
-  Future<void> forgotPassword({required String email}) async {
+  // Forgot Password
+  Future<void> forgotPassword({required String email})
+  async {
     if (AppValidator.validateEmail(email) != null) {
       return AppMessage.error("Enter a valid email.");
     }
-
     try {
       AppLoader.show(message: "Sending reset email...");
-
       await _auth.sendPasswordResetEmail(email: email.trim());
-
       AppMessage.success("Reset email sent!");
       Get.to(() => VerifyOtpScreen());
     } on FirebaseAuthException catch (e) {
@@ -257,28 +246,25 @@ class AuthController extends GetxController {
     }
   }
 
-  // CHANGE PASSWORD
+  // Change password
   Future<void> changePassword({
     required String currentPassword,
     required String newPassword,
-  }) async {
+  })
+  async {
     try {
       AppLoader.show(message: "Updating password...");
-
       final user = _auth.currentUser;
       if (user == null || user.email == null) {
         return AppMessage.error("No user logged in.");
       }
-
       await user.reauthenticateWithCredential(
         EmailAuthProvider.credential(
           email: user.email!,
           password: currentPassword,
         ),
       );
-
       await user.updatePassword(newPassword);
-
       AppMessage.success("Password updated!");
     } on FirebaseAuthException catch (e) {
       final msg = switch (e.code) {
@@ -292,8 +278,9 @@ class AuthController extends GetxController {
     }
   }
 
-  // DELETE ACCOUNT
-  Future<void> deleteAccount() async {
+  // Delete Account
+  Future<void> deleteAccount()
+  async {
     try {
       AppLoader.show(message: "Deleting account...");
 

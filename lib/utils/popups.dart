@@ -1,10 +1,17 @@
+import 'dart:io';
+import 'package:fakrny/controllers/medicine_controller.dart';
+import 'package:fakrny/controllers/user_controller.dart';
+import 'package:fakrny/models/gender_model.dart';
+import 'package:fakrny/models/user_model.dart';
 import 'package:fakrny/utils/my_shared_pref.dart';
 import 'package:fakrny/views/reused_widgets/elevated_button.dart';
 import 'package:fakrny/views/reused_widgets/horizontal_space.dart';
+import 'package:fakrny/views/reused_widgets/text_filed.dart';
 import 'package:fakrny/views/reused_widgets/vertical_space.dart';
 import 'package:fakrny/views/screens/auth_screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'app_colors.dart' show AppColors;
@@ -103,124 +110,225 @@ void showStopMedicineDialog(BuildContext context) {
   );
 }
 ///Edit Profile
-void showEditProfileDialog(BuildContext context) {
-  final nameController = TextEditingController(text: "Mohsin");
 
+
+void showEditProfileDialog(BuildContext context, UserController controller, UserModel currentUser) {
+  final TextEditingController nameController = TextEditingController(text: currentUser.userName.isEmpty ? '' : currentUser.userName);
+
+  final Rx<DateTime?> selectedDob = Rx<DateTime?>(currentUser.dateOfBirth != null ? DateTime.tryParse(currentUser.dateOfBirth!) : null);
+  final Rx<GenderModel?> selectedGender = Rx<GenderModel?>(null);
+  final addMedicineController = Get.put(AddMedicineController());
+
+  final List<GenderModel> genderList = [
+    GenderModel(name: "Male"),
+    GenderModel(name: "Female"),
+    GenderModel(name: "Custom"),
+  ];
+  late Rx<DateTime?> dob;
+  dob = Rx<DateTime?>(null);
+
+  if (currentUser.gender != null) {
+    selectedGender.value = genderList.firstWhere(
+          (g) => g.name.toLowerCase() == currentUser.gender!.toLowerCase(),
+      orElse: () => GenderModel(name: currentUser.gender!),
+    );
+  }
+  print("profile :${currentUser.profile}");
   showDialog(
     context: context,
     builder: (context) {
-      return Dialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(22.sp),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-
-              Text(
-                "Edit Profile",
-                style: AppTextStyles.semiBoldTextStyle.copyWith(
-                  fontSize: 18.sp,
-                  color: AppColors.textColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-
-              verticalSpace(2.h),
-
-              /// Avatar + Camera Button
-              Stack(
-                alignment: Alignment.bottomRight,
-                children: [
-                  CircleAvatar(
-                    radius: 32.sp,
-                    backgroundColor: Colors.grey.shade300,
-                    child: Icon(Icons.person,
-                        size: 40.sp, color: Colors.grey.shade500),
-                  ),
-
-                  Container(
-                    height: 32.sp,
-                    width: 32.sp,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: const LinearGradient(
-                        colors: [Color(0xff38EF7D), Color(0xff11998E)],
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return Dialog(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(22.sp),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Edit Profile",
+                      style: AppTextStyles.semiBoldTextStyle.copyWith(
+                        fontSize: 18.sp,
+                        color: AppColors.textColor,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    child: Icon(Icons.camera_alt,
-                        color: Colors.white, size: 17.sp),
-                  )
-                ],
-              ),
+                    verticalSpace(2.h),
+                    Obx(() {
+                      final selectedPath = addMedicineController.selectedImagePath.value;
+                      final localSelectedFile =
+                      (selectedPath != null && selectedPath.isNotEmpty) ? File(selectedPath) : null;
 
-              verticalSpace(3.h),
+                      final profilePath = currentUser.profile;
+                      final profileFile =
+                      (profilePath.isNotEmpty) ? File(profilePath) : null;
 
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Name",
-                    style: AppTextStyles.smallTextStyle.copyWith(
-                      fontSize: 15.sp,
-                      color: AppColors.textColor,
-                    )),
-              ),
-              verticalSpace(.7.h),
+                      ImageProvider? imageProvider;
+                      if (localSelectedFile != null && localSelectedFile.existsSync()) {
+                        imageProvider = FileImage(localSelectedFile);
+                      } else if (profileFile != null && profileFile.existsSync()) {
+                        imageProvider = FileImage(profileFile);
+                      }
 
-              TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.shade100,
-                  contentPadding: EdgeInsets.symmetric(
-                      horizontal: 4.w, vertical: 1.8.h),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(13.sp),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(13.sp),
-                    borderSide: BorderSide(color: Colors.grey.shade500),
-                  ),
+                      return Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          CircleAvatar(
+                            radius: 32.sp,
+                            backgroundColor: Colors.grey.shade300,
+                            backgroundImage: imageProvider,
+                            child: imageProvider == null
+                                ? Icon(Icons.person,
+                                size: 40.sp, color: Colors.grey.shade500)
+                                : null,
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              height: 32.sp,
+                              width: 32.sp,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.green.shade600,
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.camera_alt, color: Colors.white, size: 17.sp),
+                                onPressed: () async {
+                                  await addMedicineController.pickFromGallery();
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+
+                    verticalSpace(3.h),
+
+                    // Name Field
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Name",
+                          style: AppTextStyles.smallTextStyle.copyWith(
+                            fontSize: 15.sp,
+                            color: AppColors.textColor,
+                          )),
+                    ),
+                    verticalSpace(.7.h),
+                    customTextField(
+                      hintText: "hint_name".tr,
+                      controller: nameController,
+                      iconPath: "assets/icons/name.svg",
+                    ),
+                    verticalSpace(2.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "date_of_birth".tr,
+                                    style: AppTextStyles.smallTextStyle,
+                                  ),
+                                ],
+                              ),
+                              verticalSpace(.4.h),
+                              dobPicker(
+                                selectedDate: dob,
+                                hintText: "dob_hint".tr,
+                                prefixSvgPath: "assets/icons/dob.svg",
+                              ),
+                            ],
+                          ),
+                        ),
+                        horizontalSpace(1.w),
+                        Obx(
+                              () => Expanded(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "gender".tr,
+                                      style: AppTextStyles.smallTextStyle,
+                                    ),
+                                  ],
+                                ),
+                                verticalSpace(.4.h),
+                                customDropdownField<GenderModel>(
+                                  hint: "gender_male".tr,
+                                  items: genderList,
+                                  selectedValue: selectedGender,
+                                  label: (gender) => gender.name,
+                                  prefixPath: "assets/icons/gender.svg",
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+
+                    verticalSpace(2.h),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                            title: "Cancel",
+                            height: 5.2.h,
+                            borderRadius: BorderRadius.circular(30.sp),
+                            border: Border.all(color: Colors.transparent),
+                            gradient: const LinearGradient(
+                              colors: [Color(0xffD8D8D8), Color(0xffD8D8D8)],
+                            ),
+                            onTap: () => Navigator.pop(context),
+                          ),
+                        ),
+                        horizontalSpace(3.w),
+                        Expanded(
+                          child: CustomButton(
+                            title: "Save",
+                            height: 5.2.h,
+                            borderRadius: BorderRadius.circular(30.sp),
+                            onTap: () async {
+                              final String? formattedDob = selectedDob.value != null
+                                  ? DateFormat('yyyy-MM-dd').format(selectedDob.value!)
+                                  : null;
+                              String? newImagePath = addMedicineController.selectedImagePath.value ?? currentUser.profile;
+                              await controller.updateProfile(
+                                userName: nameController.text.trim().isEmpty ? null : nameController.text.trim(),
+                                dateOfBirth: formattedDob,
+                                gender: selectedGender.value?.name,
+                                profile: newImagePath,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-
-              verticalSpace(3.h),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      title: "Cancel",
-                      height: 5.2.h,
-                      borderRadius: BorderRadius.circular(30.sp),
-                      gradient: const LinearGradient(
-                        colors: [Color(0xffD8D8D8), Color(0xffD8D8D8)],
-                      ),
-                      onTap: () => Navigator.pop(context),
-                    ),
-                  ),
-                  horizontalSpace(3.w),
-                  Expanded(
-                    child: CustomButton(
-                      title: "Save",
-                      height: 5.2.h,
-                      borderRadius: BorderRadius.circular(30.sp),
-                      onTap: () => Navigator.pop(context, nameController.text),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       );
     },
   );
-}
-///Logout Popup
+}///Logout Popup
 void showLogoutDialog(BuildContext context) {
   showDialog(
     context: context,

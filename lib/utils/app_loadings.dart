@@ -1,75 +1,106 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:fakrny/utils/app_colors.dart';
+import 'app_message.dart';
 
 class AppLoader {
-  static bool _isOpen = false;
+  static bool _isShowing = false;
 
+  // Beautiful Full Screen Loader
   static void show({String message = "Please wait..."}) {
-    if (_isOpen) return;
-    _isOpen = true;
+    if (_isShowing) return;
+    _isShowing = true;
+
+    final context = Get.overlayContext ?? Get.context;
+    if (context == null || !context.mounted) return;
 
     showDialog(
-      context: Get.context!,
+      context: context,
       barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.3),
-      builder: (_) {
-        return BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-          child: Material(color: Colors.transparent,
-            child: Center(
+      barrierColor: Colors.transparent,
+      routeSettings: const RouteSettings(name: 'app_loading'),
+      builder: (_) => PopScope(
+        canPop: false,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Center(
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 30),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.15),
+                    color: Colors.black.withOpacity(0.2),
                     blurRadius: 20,
+                    offset: const Offset(0, 10),
                   ),
                 ],
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // App Logo
                   Image.asset(
                     "assets/icons/app_loading.png",
-                    height: 60,
-                    width: 60,
+                    height: 70,
+                    width: 70,
+                    errorBuilder: (_, __, ___) => const Icon(Icons.medication, size: 70, color: Colors.green),
                   ),
-                  const SizedBox(height: 18),
-                  // Circular progress indicator with main color
-                  CircularProgressIndicator(
-                    strokeWidth: 3,
-                    color: AppColors.primaryColor,
+                  const SizedBox(height: 20),
+                  const CircularProgressIndicator(
+                    strokeWidth: 3.5,
+                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4CAF50)),
                   ),
-                  const SizedBox(height: 18),
-                  // Message text
+                  const SizedBox(height: 20),
                   Text(
                     message,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black87),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                    ),
-                  )
+                  ),
                 ],
               ),
             ),
-          ),)
-        );
-      },
+          ),
+        ),
+      ),
     );
   }
 
   static void hide() {
-    if (_isOpen) {
-      _isOpen = false;
-      Navigator.of(Get.context!).pop();
+    if (!_isShowing) return;
+    _isShowing = false;
+    try {
+      final context = Get.overlayContext ?? Get.context;
+      if (context != null && context.mounted) {
+        Navigator.of(context, rootNavigator: true).pop();
+      }
+    } catch (_) {}
+  }
+
+  static Future<T?> start<T>(
+      Future<T> Function() operation, {
+        String loadingMessage = "Please wait...",
+        String? successMessage,
+        String errorMessage = "Something went wrong. Please try again.",
+        bool showSuccess = true,
+      }) async {
+    show(message: loadingMessage);
+
+    try {
+      final result = await operation();
+      if (showSuccess && successMessage != null && successMessage.isNotEmpty) {
+        Get.closeAllSnackbars();
+        AppMessage.success(successMessage);
+      }
+
+      return result;
+    } catch (e) {
+      Get.closeAllSnackbars();
+      AppMessage.error(errorMessage);
+      debugPrint("AppLoading Error: $e");
+      return null;
+    } finally {
+      hide();
     }
   }
 }

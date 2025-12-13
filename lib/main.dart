@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:fakrny/controllers/user_controller.dart';
 import 'package:fakrny/utils/app_colors.dart';
 import 'package:fakrny/utils/app_translations.dart';
 import 'package:fakrny/utils/my_shared_pref.dart';
@@ -10,7 +11,7 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'controllers/auth_controller.dart';
-import 'controllers/user_controller.dart';
+import 'controllers/medicine_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,7 @@ void main() async {
   await Firebase.initializeApp(options: firebaseOptions);
   Get.put(AuthController());
   Get.put(UserController());
+  Get.put(MedicineController());
   await SharedPrefHelper.init();
 
   runApp(const MyApp());

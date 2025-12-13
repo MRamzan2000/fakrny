@@ -21,7 +21,7 @@ class _BottomBarState extends State<BottomBar> {
 
   final screens = [
     const HomeScreen(),
-    const MyMedsScreen(),
+     MyMedsScreen(),
     const StatisticsScreen(),
     const HistoryScreen(),
   ].obs;

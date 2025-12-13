@@ -196,13 +196,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomButton(
                         height: 5.4.h,
                         iconPath: "assets/icons/google.svg",
-                        horizontal: 2.w,
                         title: "sign_in_with_google".tr,
                         onTap: () async {
                         controller.signInWithGoogle();
                         },
-                        isGradient: false,
-                        color: const Color(0xffF4F8FB),
                         border: Border.all(color: AppColors.primaryColor, width: 2),
                         textColor: AppColors.primaryColor,
                       ),

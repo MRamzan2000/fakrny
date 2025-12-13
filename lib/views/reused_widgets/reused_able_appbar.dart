@@ -4,40 +4,49 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-Widget appBar({
-  required String title
-}){
-  return  Padding(
-    padding:EdgeInsets.only(right: 3.w),
+PreferredSizeWidget appBar({
+  required String title,
+Function()? onTap
+}) {
+  return PreferredSize(
+    preferredSize: Size.fromHeight(6.h),
     child: Container(
       padding: EdgeInsets.symmetric(horizontal: 4.w),
-      height: 6.h,
       width: double.infinity,
       color: AppColors.appBarColor,
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Row(
         children: [
-          GestureDetector(onTap: (){
-            Get.back();
-          },
-              child: Icon(Icons.arrow_back_ios_new_rounded,size: 3.h,)),
-          Expanded(
-            child: SizedBox(
-
+          /// BACK BUTTON
+          GestureDetector(
+            onTap: () => Get.back(),
+            child: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 3.h,
+              color: AppColors.textColor,
             ),
           ),
-          Text(title,style: AppTextStyles.boldTextStyle.copyWith(
-              color: AppColors.textColor,
-              fontSize: 20.sp,
-              fontWeight: FontWeight.w500
-          ),),
+
+          /// CENTER TITLE
           Expanded(
-            child: SizedBox(
-              width: 6.w,
+            child: GestureDetector(
+              onTap:onTap ,
+                child:
+            Center(
+              child: Text(
+                title,
+                style: AppTextStyles.boldTextStyle.copyWith(
+                  color: AppColors.textColor,
+                  fontSize: 19.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),)
+          ),
 
-            ),
-          )
-        ],),
-
+          /// RIGHT SPACER TO BALANCE LAYOUT
+          SizedBox(width: 3.h),
+        ],
+      ),
     ),
   );
 }

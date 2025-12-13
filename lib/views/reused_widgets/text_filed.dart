@@ -21,6 +21,7 @@ class CustomInputField extends StatelessWidget {
   final bool obscureText;
   final VoidCallback? onSuffixTap;
   final Widget? suffixIcon;
+  final TextInputType? keyBoardType;
 
   // DatePicker / Dropdown specific
   final Widget? trailingIcon;
@@ -39,6 +40,7 @@ class CustomInputField extends StatelessWidget {
     this.trailingIcon,
     this.onTap,
     this.maxLine,
+    this.keyBoardType
   });
 
   @override
@@ -81,6 +83,7 @@ class CustomInputField extends StatelessWidget {
                           child: TextField(
                             cursorColor: AppColors.primaryColor,
                             cursorHeight: 2.5.h,
+                            keyboardType: keyBoardType,
                             controller: controller,
                             obscureText: obscureText,
                             maxLines: maxLine ?? 1,
@@ -135,6 +138,7 @@ Widget customTextField({
   bool obscureText = false,
   VoidCallback? onSuffixTap,
   Widget? suffixIcon,
+  TextInputType? keyboardType,   // ⭐ NEW OPTIONAL FIELD
 }) {
   return CustomInputField(
     hintText: hintText,
@@ -145,6 +149,7 @@ Widget customTextField({
     onSuffixTap: onSuffixTap,
     suffixIcon: suffixIcon,
     maxLine: maxLine,
+    keyBoardType: keyboardType,
   );
 }
 
